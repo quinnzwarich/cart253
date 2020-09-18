@@ -36,8 +36,18 @@ function setup() {
   ellipse(100, 150, 100, 100);
   ellipse(280, 150, 100, 100);
 
-  //nose
+  // nose
   ellipse(225, 300, 50, 25);
+
+  // helmet
+  ellipseMode(CORNER);
+  noStroke();
+  fill(200, 200, 255, 100);
+  ellipse(0, -15, 500, 475);
+  stroke(200, 200, 255);
+  strokeWeight(50);
+  arc(50, 55, 50, 50, HALF_PI);
+
 
 
 }
@@ -46,5 +56,7 @@ function setup() {
 //
 // Description of draw() goes here.
 function draw() {
+
+
 
 }
