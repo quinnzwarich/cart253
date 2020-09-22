@@ -11,11 +11,21 @@ P.S: there is lots of flashing ! I apologize and promise not to make such an obn
 
 **************************************************/
 
-let backgroundShade = 0;
+let bg = {
+  r: 0,
+  g: 0,
+  b: 0
+}
+
+let colour = {
+  r: 255,
+  g:127,
+  b: 255
+}
 
 let circle = {
-  x: 500,
-  y: 275,
+  x: 800,
+  y: 1000,
   size: 200,
 }
 
@@ -32,7 +42,8 @@ let circle3 = {
 }
 
 let speed = 1;
-let shade = 255;
+let multiplier = 1;
+
 
 function setup() {
   createCanvas(1000, 1000);
@@ -41,24 +52,23 @@ function setup() {
 // sin and cos are used to add cyclical movement that remains within the bounds of the canvas
 
 function draw() {
-  background(backgroundShade);
-  frameRate(60)
+background(bg.r, bg.g, bg.b);
 
-circle.x = circle.x + sin(speed) * 500;
+circle.x = circle.x + sin(speed) * multiplier;
 circle.size = circle.size + cos(speed);
-circle2.y = circle.y + sin(speed) * 500;
+circle2.y = circle.y + sin(speed) * multiplier;
 circle2.size = circle2.size + cos(speed);
-circle3.y = circle.y + sin(speed) * 500;
+circle3.y = circle.y + sin(speed) * multiplier;
 circle3.size = circle3.size + cos(speed);
 
- circle.x = map(circle2.x, 500, width, 800, 0);
- circle.y = map(circle2.y, 200, height, 800, 0);
+ circle.x = map(circle2.x, 650, width, 800, 0);
+ circle.y = map(circle2.y, 1000, 0, 1000, 0);
 
- circle2.x = map(circle3.x, 800, 0, 200, width);
- circle2.y = map(circle3.y, 800, 0, 800, height);
+ circle2.x = map(circle3.x, 350, width, 650, 0);
+ circle2.y = map(circle3.y, 1000, 0, 1000, 0);
 
- circle3.x = map(circle.x, 200, width, 500, 0);
- circle3.y = map(circle.y, 800, 0, 200, height);
+ circle3.x = map(circle.x, 800, 0, 350, width);
+ circle3.y = map(circle.y, 1000, 0, 1000, 0);
 
  // size controls both the shade of the background and of the circles but is inverted
  // the screen begins with a white background, undergoes a transition consisting of neutral grey tones,
@@ -66,12 +76,14 @@ circle3.size = circle3.size + cos(speed);
 
  // the interference patterns go through many stages, as a result of this it sometimes ends with black
 
- speed = map(mouseX, 0, width, 15, 1);
+ multiplier = map(mouseX, 0, width, 1, 500);
  speed = map(mouseY, 0, height, 1, 15);
- shade = map(circle.size, 200, 1000, 0, 255);
- backgroundShade = map(circle.size, 200, 1000, 255, 0);
+ colour.r = map(circle.size, 200, 1000, 0, 255);
+ bg.r = map(circle.size, 200, 1000, 255, 0);
+ colour.b = map(circle2.y, 1000, 0, 0, 255);
+ bg.b = map(circle3.y, 1000, 0, 255, 0);
 
-  fill(shade);
+  fill(colour.r, colour.g, colour.b);
   noStroke();
 
   ellipse(circle.x, circle.y, circle.size);
