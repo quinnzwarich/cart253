@@ -2,12 +2,9 @@
 exercise 01
 Quinn Zwarich
 
-The main idea is that the coordinates of the three circles are mapped to each other,
-creating the illusion that the circles have multiplied. The speed at which they swell
-is controlled via the mouse which itself affects the shade of the circles and the background.
-Technically, it is monochromatic though purple tones can be made out through the interference patterns that occur.
+The program has changed since a bit since it's first inception.
 
-P.S: there is lots of flashing ! I apologize and promise not to make such an obnoxious program in the future.
+
 
 **************************************************/
 
@@ -24,25 +21,26 @@ let colour = {
 }
 
 let circle = {
-  x: 800,
+  x: 633,
   y: 1000,
   size: 200,
 }
 
 let circle2 = {
-  x: 650,
+  x: 483,
   y: 1000,
   size: 200,
 }
 
 let circle3 = {
-  x: 350,
+  x: 333,
   y: 1000,
   size: 200,
 }
 
-let speed = 1;
-let multiplier = 1;
+let multiplier = 5;
+
+let speed = 5;
 
 
 function setup() {
@@ -55,20 +53,26 @@ function draw() {
 background(bg.r, bg.g, bg.b);
 
 circle.x = circle.x + sin(speed) * multiplier;
-circle.size = circle.size + cos(speed);
+circle.size = circle.size + cos(speed) * (circle2.x / 50);
 circle2.y = circle.y + sin(speed) * multiplier;
-circle2.size = circle2.size + cos(speed);
+circle2.size = circle2.size + cos(speed) * (circle3.x / 50);
 circle3.y = circle.y + sin(speed) * multiplier;
-circle3.size = circle3.size + cos(speed);
+circle3.size = circle3.size + cos(speed) * (circle.x / 50);
 
- circle.x = map(circle2.x, 650, width, 800, 0);
- circle.y = map(circle2.y, 1000, 0, 1000, 0);
+circle.x = map(circle2.x, 250, width, 400, 0);
+//circle.x = circle.x + circle.speed;
+circle.y = map(circle2.y, 100, height, 400, 0);
+//circle.y = circle.y + circle.speed;
 
- circle2.x = map(circle3.x, 350, width, 650, 0);
- circle2.y = map(circle3.y, 1000, 0, 1000, 0);
+circle2.x = map(circle3.x, 400, 0, 100, width);
+//circle2.x = circle2.x + circle2.speed;
+circle2.y = map(circle3.y, 400, 0, 400, height);
+//circle2.y = circle2.y + circle2.speed
 
- circle3.x = map(circle.x, 800, 0, 350, width);
- circle3.y = map(circle.y, 1000, 0, 1000, 0);
+circle3.x = map(circle.x, 100, width, 250, 0);
+//circle3.x = circle3.x + circle3.speed;
+circle3.y = map(circle.y, 400, 0, 100, height);
+//circle3.y = circle3.y + circle3.speed;
 
  // size controls both the shade of the background and of the circles but is inverted
  // the screen begins with a white background, undergoes a transition consisting of neutral grey tones,
@@ -76,12 +80,15 @@ circle3.size = circle3.size + cos(speed);
 
  // the interference patterns go through many stages, as a result of this it sometimes ends with black
 
- multiplier = map(mouseX, 0, width, 1, 500);
- speed = map(mouseY, 0, height, 1, 15);
- colour.r = map(circle.size, 200, 1000, 0, 255);
- bg.r = map(circle.size, 200, 1000, 255, 0);
- colour.b = map(circle2.y, 1000, 0, 0, 255);
- bg.b = map(circle3.y, 1000, 0, 255, 0);
+multiplier = map(mouseX, 0, width, 1, 500);
+speed = map(mouseY, 0, height, 1, 15);
+colour.r = map(circle.size, 200, 1000, 0, 255);
+bg.r = map(circle.size, 200, 1000, 255, 0);
+colour.b = map(circle2.y, 1000, 0, 0, 255);
+bg.b = map(circle3.y, 1000, 0, 255, 0);
+
+
+
 
   fill(colour.r, colour.g, colour.b);
   noStroke();
