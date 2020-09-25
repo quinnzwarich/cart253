@@ -1,14 +1,14 @@
-/**************************************************
-Template p5 project
-Pippin Barr
 
-Here is a description of this template p5 project.
-**************************************************/
+let bg = {
+  r: 0,
+  g: 0,
+  b: 0
+}
 
-let caterpillar = {
-  x: 0,
+let circle = {
+  x: 250,
   y: 250,
-  segmentSize: 5
+  size: 100
 }
 
 function setup() {
@@ -16,17 +16,13 @@ function setup() {
 }
 
 function draw() {
-  background(0);
-  noStroke();
-  fill(100,200,100);
+  background(bg.r, bg.g, bg.b);
 
-  let x = caterpillar.x;
-  let runSegments = 500;
-  let segmentsDrawn = 0;
+  ellipse(circle.x, circle.y, circle.size);
+}
 
-  while (segmentsDrawn < runSegments) {
-    ellipse(x, caterpillar.y, caterpillar.segmentSize);
-    x = x + 4;
-    segmentsDrawn = segmentsDrawn + 1;
-  }
+function mouseMoved() {
+  bg.r = random(0, 255);
+  bg.g = random(0, 255);
+  bg.b = random(0, 255);
 }
