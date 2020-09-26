@@ -1,28 +1,22 @@
 
-let bg = {
-  r: 0,
-  g: 0,
-  b: 0
-}
 
-let circle = {
-  x: 250,
-  y: 250,
-  size: 100
-}
+let angle = 0;
 
 function setup() {
   createCanvas(500, 500);
 }
 
 function draw() {
-  background(bg.r, bg.g, bg.b);
+  background(0);
 
-  ellipse(circle.x, circle.y, circle.size);
-}
+push();
+fill(255, 0, 0);
+rectMode(CENTER);
+translate(width/2, height/2);
+rotate(angle);
+rect(0, 0, 100, 100);
+pop();
 
-function mouseMoved() {
-  bg.r = random(0, 255);
-  bg.g = random(0, 255);
-  bg.b = random(0, 255);
+angle = angle + 0.01;
+
 }
