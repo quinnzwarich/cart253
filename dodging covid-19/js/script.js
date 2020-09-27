@@ -9,14 +9,21 @@ let covid19 = {
   x: 0,
   y: 250,
   size: 100,
+  size2: 500,
   vx: 0,
   vy: 0,
   speed: 5,
   fill: {
-    r: 255,
+    r: 0,
     g: 0,
     b: 0
   }
+}
+
+let tentacles = {
+  total: 8,
+  spacing: 0,
+  drawn: 0
 }
 
 let user = {
@@ -47,7 +54,7 @@ function draw() {
 
   if (covid19.x > width) {
     covid19.x = 0;
-    covid19.y = random(0, height);
+    covid19.y = user.y;
   }
 
   // user movement
@@ -62,18 +69,29 @@ function draw() {
   }
 
   // display static
-    static = map(d, 0, width, 500, 0);
+    static = map(d, 0, width, 100, 0);
 
     for (let i = 0; i < static; i++) {
-      let x = random(0, width);
-      let y = random(0, height);
-      stroke(255);
-      point(x,y);
+
+      let x = random(0, i);
+      let y = random(0, i);
+      let x1 = random(0, i);
+      let y1 = random(0, i);
+
+      while (tentacles.drawn < tentacles.total) {
+
+        tentacles.spacing = tentacles.spacing + 22.5;
+        tentacles.spacing = tentacles.spacing / 180;
+
+        curve(x, y, covid19.x, covid19.y, covid19.x * (tentacles.spacing*PI), covid19.y * (tentacles.spacing*PI), x1, y1);
+
+        tentacles.drawn = tentacles.drawn + 1;
+      }
     }
 
   // display covid19
-  fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
-  ellipse(covid19.x, covid19.y, covid19.size);
+  //fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
+  //ellipse(covid19.x, covid19.y, covid19.size);
 
   // display user
   fill(user.fill);
