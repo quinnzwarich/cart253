@@ -85,8 +85,13 @@ function draw() {
 
         curve(x, y, covid19.x, covid19.y, covid19.x * (tentacles.spacing*PI), covid19.y * (tentacles.spacing*PI), x1, y1);
 
-        tentacles.drawn = tentacles.drawn + 1;
+        tentacles.drawn = tentacles.drawn + 1
+
       }
+    }
+
+    if (!(tentacles.drawn < tentacles.total)) {
+      tenctacles.drawn = 0;
     }
 
   // display covid19
