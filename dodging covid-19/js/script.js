@@ -7,16 +7,15 @@ Here is a description of this template p5 project.
 
 let covid19 = {
   x: 0,
-  y: 250,
-  size: 100,
-  size2: 500,
+  y: 0,
+  size: 150,
   vx: 0,
   vy: 0,
   speed: 5,
   fill: {
-    r: 0,
-    g: 0,
-    b: 0
+    r: 255,
+    g: 255,
+    b: 125
   }
 }
 
@@ -33,13 +32,14 @@ let user = {
   fill: 255
 }
 
-let static = 0;
+let angle = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  covid19.y = random(0, height);
-  covid19.vx = covid19.speed;
+  covid19.x = width / 2;
+  covid19.y = height / 2;
+
 }
 
 // draw()
@@ -49,13 +49,28 @@ function draw() {
   background(0);
 
   // covid19 movement
-  covid19.x = covid19.x + covid19.vx;
-  covid19.y = covid19.y + covid19.vy;
+  //covid19.x = covid19.x + covid19.vx;
+  //covid19.y = covid19.y + covid19.vy;
 
-  if (covid19.x > width) {
-    covid19.x = 0;
-    covid19.y = user.y;
-  }
+  //if (user.x > width/2) {
+  //  if (covid19.x > width || covid19.x < 0) {
+  //    covid19.x = width;
+  //    covid19.vx = covid19.vx + 1;
+  //    covid19.vx = -(covid19.vx);
+  //    covid19.y = user.y;
+  //  }
+  //}
+
+  //if (user.x < width/2) {
+  //  if (covid19.x > width || covid19.x < 0) {
+  //    covid19.x = 0;
+  //    covid19.vx = covid19.vx + 1;
+  //    covid19.vx = -(covid19.vx);
+  //    covid19.y = user.y;
+  //  }
+  //}
+
+
 
   // user movement
   noCursor();
@@ -68,37 +83,50 @@ function draw() {
     noLoop();
   }
 
-  // display static
-    static = map(d, 0, width, 100, 0);
+    while (tentacles.drawn < tentacles.total) {
 
-    for (let i = 0; i < static; i++) {
+        let currentFill = map(tentacles.drawn, 0, tentacles.total, 0, 255);
+        let x = map(tentacles.drawn, 0, tentacles.total, 0, width);
+        let y = map(tentacles.drawn, 0, tentacles.total, 0, height);
+        let x1 = map(tentacles.drawn, 0, tentacles.total, width, 0);
+        let y1 = map(tentacles.drawn, 0, tentacles.total, height, 0);
 
-      let x = random(0, i);
-      let y = random(0, i);
-      let x1 = random(0, i);
-      let y1 = random(0, i);
+        tightness = map(covid19.x, 0, width, -5, 5);
 
-      while (tentacles.drawn < tentacles.total) {
+        push();
+        curveTightness(tightness);
+        stroke(currentFill);
+        fill(currentFill, currentFill, currentFill/2, currentFill);
+        curve(x, y, covid19.x, covid19.y, x1, y1, covid19.x * (tentacles.spacing*PI), covid19.y * (tentacles.spacing*PI));
+        pop();
 
-        tentacles.spacing = tentacles.spacing + 22.5;
-        tentacles.spacing = tentacles.spacing / 180;
-
-        curve(x, y, covid19.x, covid19.y, covid19.x * (tentacles.spacing*PI), covid19.y * (tentacles.spacing*PI), x1, y1);
-
-        tentacles.drawn = tentacles.drawn + 1
+        tentacles.drawn = tentacles.drawn + 1;
 
       }
-    }
+
+  if (tentacles.drawn + 1) {
+
+      tentacles.spacing = tentacles.spacing + 22.5;
+      tentacles.spacing = tentacles.spacing / 180;
+
+      }
 
     if (!(tentacles.drawn < tentacles.total)) {
-      tenctacles.drawn = 0;
+      tentacles.drawn = 0;
     }
 
-  // display covid19
-  //fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
-  //ellipse(covid19.x, covid19.y, covid19.size);
+    // display user
+    fill(user.fill);
+    ellipse(user.x, user.y, user.size);
 
-  // display user
-  fill(user.fill);
-  ellipse(user.x, user.y, user.size);
+angle = angle + 0.2;
+
+      fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
+      translate(width/2, height/2);
+      rotate(2*PI);
+      noStroke();
+      ellipse(covid19.x, covid19.y, covid19.size);
+
+
+
 }
