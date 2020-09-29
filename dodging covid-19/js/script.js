@@ -5,13 +5,24 @@ Quinn Zwarich
 Here is a description of this template p5 project.
 **************************************************/
 
-let covid19 = {
+let moth = {
   x: 0,
   y: 0,
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 2,
+}
+
+let tentacles = {
+  total: 8,
+  spacing: 0,
+  drawn: 0,
+}
+
+let firefly = {
+  x: 250,
+  y: 250,
+  size: 100,
   fill: {
     r: 255,
     g: 255,
@@ -19,26 +30,29 @@ let covid19 = {
   }
 }
 
-let tentacles = {
-  total: 8,
-  spacing: 0,
-  drawn: 0
-}
-
 let user = {
-  x: 250,
-  y: 250,
-  size: 100,
-  fill: 255
+  x: 0,
+  y: 0,
 }
 
-let angle = 0;
+let mth;
+
+function preload() {
+  mth = loadImage('assets/moth.jpg');
+}
+
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  covid19.x = width / 2;
-  covid19.y = height / 2;
+mth.loadPixels();
+
+  moth.x = width/2;
+  moth.y = height;
+
+  firefly.x = width/2;
+  firefly.y = height/3;
 
 }
 
@@ -48,59 +62,51 @@ function setup() {
 function draw() {
   background(0);
 
-  // user movement
+  // firefly movement
   noCursor();
+
+if (mouseIsPressed) {
   user.x = mouseX;
   user.y = mouseY;
+}
 
-  // covid19 movement
-  covid19.x = covid19.x + covid19.vx;
-  covid19.y = covid19.y + covid19.vy;
+  // moth movement
+  moth.x = moth.x + moth.vx;
+  moth.y = moth.y + moth.vy;
 
-  if (covid19.x > width) {
-    covid19.x = random(0, width/2);
+if (mouseIsPressed) {
+  moth.x = user.x;
+  moth.y = user.y;
+}
+
+  let r1 = random();
+
+  let xReact = map(firefly.x, 0, width, 0, 1);
+  let yReact = map(firefly.y, 0, height, 0, 1);
+
+  if (r1 < xReact) {
+    moth.vx = random(-1, 1);
+  }
+  else if (moth.x < firefly.x) {
+    moth.vx = 1;
+  }
+  else if (moth.x > firefly.x) {
+    moth.vx = -1;
   }
 
-  if (covid19.x < 0) {
-    covid19.x = random(width/2, width);
+  if (r1 < yReact) {
+    moth.vy = random(-1, 1);
+  }
+  else if (moth.y < firefly.y) {
+    moth.vy = 1;
+  }
+  else if (moth.y > firefly.y) {
+    moth.vy = -1;
   }
 
-  if (covid19.y > height) {
-    covid19.y = random(0, height/2);
-  }
-
-  if (covid19.y < 0) {
-    covid19.y = random(height/2, height);
-  }
-
-  let r = random();
-
-  let xReact = map(user.x, 0, width, 0, 1);
-  let yReact = map(user.y, 0, height, 0, 1);
-
-  if (r < xReact) {
-    covid19.vx = random(-3, 3);
-  }
-  else if (covid19.x < user.x) {
-    covid19.vx = 3;
-  }
-  else if (covid19.x > user.x) {
-    covid19.vx = -3;
-  }
-
-  if (r < yReact) {
-    covid19.vy = random(-3, 3);
-  }
-  else if (covid19.y < user.y) {
-    covid19.vy = 3;
-  }
-  else if (covid19.y > user.y) {
-    covid19.vy = -3;
-  }
-
-  // check for covid19
-  let d = dist(user.x, user.y, covid19.x, covid19.y);
-  if (d < covid19.size/2 + user.size/2) {
+  // check for moth
+  let d = dist(firefly.x, firefly.y, moth.x, moth.y);
+  if (d < moth.size/2 + firefly.size/2) {
     noLoop();
   }
 
@@ -112,16 +118,41 @@ function draw() {
         let x1 = map(tentacles.drawn, 0, tentacles.total, width, 0);
         let y1 = map(tentacles.drawn, 0, tentacles.total, height, 0);
 
-        tightness = map(user.x, 0, width, -5, 5);
+        tightness = map(firefly.x, 0, width, -5, 5);
+
+        if (user.x > x) {
+           firefly.vx = 15;
+         }
+         else if (user.x < x) {
+           firefly.vx = -15;
+         }
+           if (user.x < x1) {
+              firefly.vx = 15;
+            }
+            else if (user.x > x) {
+              firefly.vx = -15;
+            }
+              if (user.y > y) {
+                 firefly.vy = 15;
+               }
+               else if (user.y < y) {
+                 firefly.vy = -15;
+               }
+                 if (user.y < y1) {
+                    firefly.vy = 15;
+                  }
+                  else if (user.x > y1) {
+                    firefly.vy = -15;
+                  }
 
         push();
         curveTightness(tightness);
         stroke(currentFill);
         fill(currentFill, currentFill, currentFill/2, currentFill);
-        curve(x, y, user.x, user.y, x1, y1, user.x * (tentacles.spacing*PI), user.y * (tentacles.spacing*PI));
-        curve(x, y, user.x, user.y, x, y1, user.x * (tentacles.spacing*PI), user.y * (tentacles.spacing*PI));
-        curve(x, y, user.x, user.y, x1, y, user.x * (tentacles.spacing*PI), user.y * (tentacles.spacing*PI));
-        curve(x, y, user.x, user.y, x, y, user.x * (tentacles.spacing*PI), user.y * (tentacles.spacing*PI));
+        curve(x, y, firefly.x, firefly.y, x1 + firefly.vx, y1 + firefly.vy, firefly.x * (tentacles.spacing*PI), firefly.y * (tentacles.spacing*PI));
+        curve(x, y, firefly.x, firefly.y, x + firefly.vx, y1 + firefly.vy, firefly.x * (tentacles.spacing*PI), firefly.y * (tentacles.spacing*PI));
+        curve(x, y, firefly.x, firefly.y, x1 + firefly.vx, y + firefly.vy, firefly.x * (tentacles.spacing*PI), firefly.y * (tentacles.spacing*PI));
+        curve(x, y, firefly.x, firefly.y, x + firefly.vx, y + firefly.vy, firefly.x * (tentacles.spacing*PI), firefly.y * (tentacles.spacing*PI));
         pop();
 
         tentacles.drawn = tentacles.drawn + 1;
@@ -141,14 +172,13 @@ function draw() {
 
       }
 
-    // display user
-    fill(user.fill);
-    ellipse(covid19.x, covid19.y, covid19.size);
+    // display moth
+    image(mth, moth.x, moth.y, moth.size, moth.size);
 
-    // display covid19
+    // display firefly
     noStroke();
-    fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
-    ellipse(user.x, user.y, user.size);
+    fill(firefly.fill.r, firefly.fill.g, firefly.fill.b);
+    ellipse(firefly.x, firefly.y, firefly.size);
 
 
 
