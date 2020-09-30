@@ -106,8 +106,8 @@ function draw() {
 
   // draw the firefly wings
   // a whole lot is going on here, I can't say I completely understand what I did
-  // the idea here is that the number of of wings is gradation and curvature of each controlled
-  // as well, i attempted to draw each one PI/8 radians apart relative to each set
+  // the idea here is that the number of wings is affecting the gradation and curvature of each one
+  // as well, I attempted to draw each one PI/8 radians apart relative to each set
   // there are four sets, each being reflected across a different axis
   // (pay special attention to the 5th and 6th arguments of each curve drawing to see this)
   while (wings.drawn < wings.total) {
