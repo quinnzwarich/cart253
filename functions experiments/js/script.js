@@ -5,19 +5,13 @@ Pippin Barr
 Here is a description of this template p5 project.
 **************************************************/
 
-let circle = {
-  x: 0,
-  y: 250,
-  size: 100,
-  vx: 1,
-  vy: 0
-}
+
 
 // setup()
 //
 // Description of setup() goes here.
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(windowWidth, windowHeight);
 }
 
 // draw()
@@ -26,35 +20,26 @@ function setup() {
 function draw() {
   background (0);
 
-  move();
-  wrap();
-  display();
+  parallels2(0, 0, 5, 1, 300, 50);
+  parallels2(width, 0, -5, -1, 300, 50);
 }
 
-function move() {
-  circle.x = circle.x + circle.vx;
-  circle.y = circle.y + circle.vy;
-}
-
-function wrap() {
-  if (circle.x > width) {
-    reset();
+function parallels(x, y, space, numLines, lineWidth, lineHeight) {
+  for(let i = 0; i < numLines; i++) {
+    noStroke();
+    fill(255);
+    rectMode(CENTER);
+    rect(x, y, lineWidth, lineHeight);
+    space = space * 1.1225;
+    x = x + space;
   }
 }
 
-function display() {
-  fill(255, 125, 255);
-  rectMode(CENTER);
-  rect(circle.x, circle.y, circle.size);
-}
-
-function reset() {
-  circle.x = 0;
-  circle.vx = circle.vx + 2;
-  circle.vy = circle.vy - 0.25;
-  circle.size = circle.size + 5;
-}
-
-function mousePressed() {
-  reset();
+function parallels2(x2, y2, space2, space2Mod, numLines2, lineHeight2) {
+  for (let j = 0; j < numLines2; j++) {
+    y2 = y2 + 5;
+    space2 = space2 + space2Mod;
+    lineHeight2 = lineHeight2 + 0.25;
+    parallels(x2, y2, space2, 15, 2, lineHeight2);
+  }
 }
