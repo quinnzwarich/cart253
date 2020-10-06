@@ -20,7 +20,8 @@ function setup() {
 function draw() {
   background(255);
 
-  strokeWeight(5);
+  angleMode(DEGREES);
+  strokeWeight(1);
   stroke(0);
   translate(0, 0, 0);
   rotateX(angleX);
@@ -33,7 +34,17 @@ function draw() {
   endShape();
   push();
   beginShape();
-  rotateX(PI/2);
+  translate(0, 0, 212);
+  rotateX(45);
+  vertex(300, -212, -212);
+  vertex(-212, -300, 0);
+  vertex(-212, 0, 0);
+  vertex(300, -212, -212);
+  endShape();
+  pop();
+  push();
+  beginShape();
+  rotateX(90);
   vertex(300, 0, 0)
   vertex(-212, -212, 0);
   vertex(-400, 0, 0);
@@ -43,15 +54,16 @@ function draw() {
   pop();
   push();
   beginShape();
-  rotateY(PI/2);
+  rotateY(90);
   translate(0, 0, -212);
-  vertex(-212, 0, 0);
+  //vertex(-212, 0, 0);
   vertex(212, 0, 0);
   vertex(0, -212, 0);
   vertex(-212, 0, 0);
+
   endShape();
   pop();
 
-  angleX = angleX + 0.01;
-  angleY = angleY + 0.05;
+  angleX = angleX + 1;
+  angleY = angleY + 1.2;
 }
