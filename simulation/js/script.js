@@ -7,11 +7,28 @@ Pippin Barr
 Here is a description of this template p5 project.
 **************************************************/
 
-let angleX = 0;
-let angleY = 0;
+let pedals = {
+  x1: 0,
+  y1: -5,
+  x2: 0,
+  y2: -35,
+  x3: 10,
+  y3: -15
+}
+
+let stem = {
+  x1: 0,
+  y1: 35,
+  x2: 0,
+  y2: 65
+}
+
+let columns = 0;
+
+let rows = 0;
 
 function setup() {
-  createCanvas(1000, 1000, WEBGL);
+  createCanvas(1000, 1000);
 }
 
 // draw()
@@ -20,50 +37,32 @@ function setup() {
 function draw() {
   background(255);
 
-  angleMode(DEGREES);
-  strokeWeight(1);
-  stroke(0);
-  translate(0, 0, 0);
-  rotateX(angleX);
-  rotateY(angleY);
-  beginShape();
-  vertex(300, 0, 0)
-  vertex(-212, -212, 0);
-  vertex(-400, 0, 0);
-  vertex(300, 0, 0);
-  endShape();
-  push();
-  beginShape();
-  translate(0, 0, 212);
-  rotateX(45);
-  vertex(300, -212, -212);
-  vertex(-212, -300, 0);
-  vertex(-212, 0, 0);
-  vertex(300, -212, -212);
-  endShape();
-  pop();
-  push();
-  beginShape();
-  rotateX(90);
-  vertex(300, 0, 0)
-  vertex(-212, -212, 0);
-  vertex(-400, 0, 0);
-  vertex(-212, 212, 0);
-  vertex(300, 0, 0);
-  endShape();
-  pop();
-  push();
-  beginShape();
-  rotateY(90);
-  translate(0, 0, -212);
-  //vertex(-212, 0, 0);
-  vertex(212, 0, 0);
-  vertex(0, -212, 0);
-  vertex(-212, 0, 0);
+  drawFlower();
+}
 
-  endShape();
-  pop();
+function drawFlower() {
+  drawBulb();
+  drawPedals();
+  drawStem();
+}
 
-  angleX = angleX + 1;
-  angleY = angleY + 1.2;
+function drawBulb() {
+  strokeWeight(0.5);
+  translate(width/2, height/2);
+  ellipse(0, 0, 10);
+}
+
+function drawPedals() {
+  for (let numPedals = 0; numPedals < 8; numPedals++) {
+    rotate(PI/4);
+    triangle(pedals.x1, pedals.y1, pedals.x2, pedals.y2, pedals.x3, pedals.y3);
+  }
+}
+
+function drawStem() {
+  line(stem.x1, stem.y1, stem.x2, stem.y2);
+}
+
+function writeColumns() {
+  for (let j = 0; j)
 }
