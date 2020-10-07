@@ -26,10 +26,11 @@ let circle2 = {
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 4,
+  speed: 3,
 };
 
 let angle = 0;
+let angleIncrement = 0;
 let fallingOutRate = 50;
 let bgShade = 0;
 
@@ -58,6 +59,8 @@ function draw() {
     turnAwayEnding();
   } else if (state === `love`) {
     love();
+  } else if (state === `outOfLove`) {
+    outOfLove();
   } else if (state === `loveEnding`) {
     loveEnding();
   }
@@ -75,7 +78,8 @@ function title() {
 }
 
 function simulation() {
-  move();
+  move1();
+  move2();
   checkOffScreen1();
   checkOffScreen2();
   checkOverlap();
@@ -83,7 +87,7 @@ function simulation() {
 }
 
 function love() {
-  checkFallingOutRate();
+  checkOutOfLove();
 
   background(bgShade);
   push();
@@ -104,9 +108,30 @@ function love() {
   ellipse(fallingOutRate, 0, circle2.size);
 
   // make them grow apart
-  angle = angle + 0.5;
-  fallingOutRate = fallingOutRate + 0.25;
-  bgShade = map(fallingOutRate, 50, 1000, 0, 255);
+  angle = angle + angleIncrement;
+  angleIncrement = map(fallingOutRate, 50, 500, 4, 0);
+  growApart();
+}
+
+function outOfLove() {
+  checkFallingOutRate();
+
+  background(bgShade);
+  push();
+  noStroke();
+  translate(-fallingOutRate, 0);
+  ellipse(circle1.x, circle1.y, circle1.size);
+  translate(fallingOutRate, 0);
+  ellipse(circle2.x, circle2.y, circle2.size);
+  pop();
+  push();
+  textSize(32);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(`is it any more clear now that you've left?`, width / 2, (2 * height) / 3);
+  pop();
+
+  growApart();
 }
 
 function neverMetEnding() {
@@ -129,9 +154,10 @@ function turnAwayEnding() {
 
 function loveEnding() {
   background(255);
+
 }
 
-function move() {
+function move1() {
   // allow user to control circle with arrow keys
   if (keyIsDown(LEFT_ARROW)) {
     circle1.vx = -circle1.speed;
@@ -149,15 +175,17 @@ function move() {
     circle1.vy = 0;
   }
 
+  circle1.x = circle1.x + circle1.vx;
+  circle1.y = circle1.y + circle1.vy;
+}
+
+function move2() {
   // make non user controlled circle randomly search
   let change = random();
   if (change < 0.05) {
     circle2.vx = random(-circle2.speed, circle2.speed);
     circle2.vy = random(-circle2.speed, circle2.speed);
   }
-
-  circle1.x = circle1.x + circle1.vx;
-  circle1.y = circle1.y + circle1.vy;
 
   circle2.x = circle2.x + circle2.vx;
   circle2.y = circle2.y + circle2.vy;
@@ -195,11 +223,22 @@ function checkOverlap() {
   }
 }
 
+function checkOutOfLove() {
+  if (fallingOutRate > 500) {
+    state = "outOfLove"
+  }
+}
+
 function checkFallingOutRate() {
   // make sure the screen stays white after having transitioned
   if (fallingOutRate > 1000) {
-    state = "loveEnding";
+    state = `loveEnding`;
   }
+}
+
+function growApart() {
+  fallingOutRate = fallingOutRate + 0.25;
+  bgShade = map(fallingOutRate, 50, 1000, 0, 255);
 }
 
 function display() {
@@ -216,7 +255,7 @@ function display() {
   fill(255);
   textAlign(CENTER, CENTER);
   text(
-    `you never knew what it was you were looking for`,
+    `you never knew what it was that you were looking for`,
     width / 2,
     (2 * height) / 3
   );
