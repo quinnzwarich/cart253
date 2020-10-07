@@ -32,8 +32,7 @@ let columns = 0;
 let rows = 0;
 
 function setup() {
-  createCanvas(1400, 1000);
-
+  createCanvas(1400, 1000, WEBGL);
   columns = width / 70;
   rows = height / 100;
 }
@@ -43,20 +42,21 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(255);
-  //drawFlower();
-  //drawFlower();
-  //translate(width/2, height/2);
-  //rotateX(PI/3);
-  writeColumnsAndRows();
-  //drawFlower(0, 0);
 
+  //translate(width/2, height/2);
+  rotateX(PI/3);
+  writeColumnsAndRows();
 }
 
 function drawFlower(x, y) {
+  push();
   translate(30, 30);
-  drawPedals(x + pedals.x1, y + pedals.y1, x + pedals.x2, y + pedals.y2, x + pedals.x3, y + pedals.y3);
-  drawBulb(x + bulb.x, y + bulb.y);
-  drawStem(x + stem.x1, y + stem.y1, x + stem.x2, y + stem.y2);
+  translate(x, y);
+  rotateX(-PI/2);
+  drawPedals();
+  drawBulb();
+  drawStem();
+  pop();
 }
 
 function drawBulb() {
@@ -76,10 +76,9 @@ function drawStem() {
 }
 
 function writeColumnsAndRows() {
-  //translate(-width/2, -height/2);
+  translate(-width/2, -height/2);
   for (let k = 0; k < columns; k++) {
     for (let j = 0; j < rows; j++) {
-      //rect(k * 70, j * 100, 70, 100);
       drawFlower(k * 70, j * 100);
     }
   }
