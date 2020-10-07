@@ -68,7 +68,6 @@ function draw() {
 
 function title() {
   background(255);
-
   push();
   textSize(64);
   fill(0);
@@ -88,6 +87,7 @@ function simulation() {
 
 function love() {
   checkOutOfLove();
+  growApart();
 
   background(bgShade);
   push();
@@ -107,15 +107,17 @@ function love() {
   ellipse(-fallingOutRate, 0, circle1.size);
   ellipse(fallingOutRate, 0, circle2.size);
 
-  // make them grow apart
+  // change rotation speed over time
   angle = angle + angleIncrement;
   angleIncrement = map(fallingOutRate, 50, 500, 4, 0);
-  growApart();
 }
 
 function outOfLove() {
   checkFallingOutRate();
+  growApart();
+  move2();
 
+  // make the circles cease orbit
   background(bgShade);
   push();
   noStroke();
@@ -128,10 +130,12 @@ function outOfLove() {
   textSize(32);
   fill(255);
   textAlign(CENTER, CENTER);
-  text(`is it any more clear now that you've left?`, width / 2, (2 * height) / 3);
+  text(
+    `is it any more clear now that you've left?`,
+    width / 2,
+    (2 * height) / 3
+  );
   pop();
-
-  growApart();
 }
 
 function neverMetEnding() {
@@ -154,7 +158,6 @@ function turnAwayEnding() {
 
 function loveEnding() {
   background(255);
-
 }
 
 function move1() {
@@ -224,8 +227,9 @@ function checkOverlap() {
 }
 
 function checkOutOfLove() {
+  // have them fall out of love halfway through the fade to white
   if (fallingOutRate > 500) {
-    state = "outOfLove"
+    state = "outOfLove";
   }
 }
 
@@ -237,6 +241,7 @@ function checkFallingOutRate() {
 }
 
 function growApart() {
+  // controls fade and orbit
   fallingOutRate = fallingOutRate + 0.25;
   bgShade = map(fallingOutRate, 50, 1000, 0, 255);
 }
