@@ -7,28 +7,30 @@ Pippin Barr
 Here is a description of this template p5 project.
 **************************************************/
 
-let pedals = {
-  x1: 0,
-  y1: -5,
-  x2: 0,
-  y2: -35,
-  x3: 10,
-  y3: -15
-}
-
-let stem = {
-  x1: 0,
-  y1: 35,
-  x2: 0,
-  y2: 65
-}
+// let pedals = {
+//   x1: 0,
+//   y1: -5,
+//   x2: 0,
+//   y2: -35,
+//   x3: 10,
+//   y3: -15
+// }
+//
+// let stem = {
+//   x1: 0,
+//   y1: 35,
+//   x2: 0,
+//   y2: 65
+// }
 
 let columns = 0;
-
 let rows = 0;
 
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(windowWidth, windowHeight);
+
+  columns = width / 70;
+  rows = height / 100;
 }
 
 // draw()
@@ -36,33 +38,39 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(255);
+  //drawFlower(0, 0);
+  writeColumnsAndRows();
 
-  drawFlower();
 }
 
-function drawFlower() {
-  drawBulb();
-  drawPedals();
-  drawStem();
+function drawFlower(x, y) {
+  translate(30, 30);
+  drawBulb(x, y);
+  drawPedals(x, y, x, y);
+  drawStem(x, y, x, y, x, y);
 }
 
-function drawBulb() {
+function drawBulb(bulbX = 0, bulbY = 0) {
   strokeWeight(0.5);
-  translate(width/2, height/2);
-  ellipse(0, 0, 10);
+  ellipse(bulbX, bulbY, 10);
 }
 
-function drawPedals() {
+function drawPedals(pedalX1 = 0, pedalY1 = 1, pedalX2 = 0, pedalY2 = 0, pedalX3 = 1, pedalY3 = 1) {
   for (let numPedals = 0; numPedals < 8; numPedals++) {
     rotate(PI/4);
-    triangle(pedals.x1, pedals.y1, pedals.x2, pedals.y2, pedals.x3, pedals.y3);
+    triangle(pedalX1, pedalY1 * 30, pedalX2, pedalY2, pedalX3 * 10, pedalY3 * 20);
   }
 }
 
-function drawStem() {
-  line(stem.x1, stem.y1, stem.x2, stem.y2);
+function drawStem(stemX1 = 0, stemY1 = 1, stemX2 = 0, stemY2 = 1) {
+  line(stemX1, stemY1 * 30, stemX2, stemY2 * 60);
 }
 
-function writeColumns() {
-  for (let j = 0; j)
+function writeColumnsAndRows() {
+  for (let k = 0; k < columns; k++) {
+    for (let j = 0; j < rows; j++) {
+      //rect(k * 70, j * 100, 70, 100);
+      drawFlower(k * 70, j * 100);
+    }
+  }
 }
