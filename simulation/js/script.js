@@ -1,10 +1,10 @@
 "use strict";
 
 /**************************************************
-Template p5 project
+Template p5 proyect
 Pippin Barr
 
-Here is a description of this template p5 project.
+Here is a description of this template p5 proyect.
 **************************************************/
 
 let pedals = {
@@ -31,10 +31,23 @@ let bulb = {
 let columns = 0;
 let rows = 0;
 
+let flowerColours = new Array(columns);
+
 function setup() {
   createCanvas(1400, 1000, WEBGL);
   columns = width / 70;
   rows = height / 100;
+
+  let xOffset = 0;
+  let yOffset = 0;
+  for (let x = 0; x < columns; x++) {
+    flowerColours[x] = new Array(rows);
+    for (let y = 0; y < rows - 1; y++)  {
+      flowerColours[x][y] = map(noise(xOffset,yOffset), 0, 1, 0, 255);
+      yOffset = yOffset + 1;
+    }
+    xOffset = xOffset + 0.7;
+  }
 }
 
 // draw()
@@ -42,17 +55,16 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(255);
-
-  //translate(width/2, height/2);
   rotateX(PI/3);
   writeColumnsAndRows();
 }
 
-function drawFlower(x, y) {
+function drawFlower(x, y, pedalsR, pedalsG, pedalsB) {
   push();
   translate(30, 30);
   translate(x, y);
   rotateX(-PI/2);
+  fill(pedalsR, pedalsG, pedalsB);
   drawPedals();
   drawBulb();
   drawStem();
@@ -77,9 +89,16 @@ function drawStem() {
 
 function writeColumnsAndRows() {
   translate(-width/2, -height/2);
-  for (let k = 0; k < columns; k++) {
-    for (let j = 0; j < rows; j++) {
-      drawFlower(k * 70, j * 100);
+  for (let x = 0; x < columns; x++) {
+    for (let y = 0; y < rows - 1; y++) {
+      // draw grass
+      push();
+      translate(0, 0, -70);
+      noStroke();
+      fill(181, 225, 174);
+      rect(x * 70, y * 100, 70, 100);
+      pop();
+      drawFlower(x * 70, y * 100, flowerColours[x], flowerColours[y], flowerColours[x][y]);
     }
   }
 }
