@@ -23,13 +23,7 @@ let stem = {
   y2: 60
 }
 
-let bulb = {
-  x: 0,
-  y: 0,
-  z: 1
-}
-
-let user = {
+let levitate = {
   vy: 0,
   ay: 0,
   maxSpeed: 2,
@@ -40,8 +34,13 @@ let user = {
 let cnv;
 let font;
 
+let r = 0;
+
 let columns = 0;
 let rows = 0;
+
+let movements = new Array(columns);
+let flowers = new Array(columns);
 let flowerAngles = new Array(columns);
 let flowerColours = new Array(columns);
 
@@ -70,6 +69,48 @@ function draw() {
   }
 }
 
+// class Flower {
+//   constructor() {
+//     this.pedalX1 = 0;
+//     this.pedalY1 = 15;
+//     this.pedalX2 = 0;
+//     this.pedalY2 = 0;
+//     this.pedalX3 = 5;
+//     this.pedalY3 = 10;
+//     this.stemX1 = 0;
+//     this.stemY1 = 0;
+//     this.stemX2 = 0;
+//     this.stemY2 = 60;
+//   }
+
+function drawFlower(x, y, z, pedalsR, pedalsG, pedalsB, angle) {
+    push();
+    translate(0, 0, 250);
+    translate(x, y, z);
+    rotateX(-PI/2);
+    strokeWeight(0.5);
+    stroke(161, 205, 154);
+    drawStem();
+    fill(pedalsR, pedalsG, pedalsB);
+    stroke(pedalsR, pedalsG, pedalsB);
+    rotateX(PI);
+    rotateY(2 * PI);
+    drawPedals(angle);
+    pop();
+  }
+
+function drawPedals(tempAngle) {
+  for (let numPedals = 0; numPedals < 8; numPedals++) {
+    rotateY(tempAngle);
+    rotate(PI/4);
+    triangle(pedals.x1, pedals.y1, pedals.x2, pedals.y2, pedals.x3, pedals.y3);
+  }
+}
+
+function drawStem() {
+  line(stem.x1, stem.y1, stem.x2, stem.y2);
+}
+
 function title() {
   background(211, 204, 255);
   writeArray();
@@ -89,37 +130,26 @@ function title() {
   pop();
   push();
   rotateX(PI/3);
-  drawFlowers(user.move);
+  drawFlowers();
   pop();
 }
 
-function drawFlower(x, y, z, pedalsR, pedalsG, pedalsB, v) {
-  push();
-  translate(0, 0, 250);
-  translate(x, y, z);
-  rotateX(-PI/2);
-  strokeWeight(0.5);
-  stroke(161, 205, 154);
-  drawStem();
-  fill(pedalsR, pedalsG, pedalsB);
-  stroke(pedalsR, pedalsG, pedalsB);
-  rotateX(PI);
-  rotateY(2 * PI);
-  drawPedals(v);
-  pop();
-}
-
-function drawPedals(v) {
-  for (let numPedals = 0; numPedals < 8; numPedals++) {
-    rotateY(v);
-    rotate(PI/4);
-    triangle(pedals.x1, pedals.y1, pedals.x2, pedals.y2, pedals.x3, pedals.y3);
-  }
-}
-
-function drawStem() {
-  line(stem.x1, stem.y1, stem.x2, stem.y2);
-}
+// function drawFlower(x, y, z, pedalsR, pedalsG, pedalsB, vector) {
+//   push();
+//   translate(0, 0, 250);
+//   translate(x, y, z);
+//   rotateX(-PI/2);
+//   strokeWeight(0.5);
+//   stroke(161, 205, 154);
+//   drawStem();
+//   fill(pedalsR, pedalsG, pedalsB);
+//   stroke(pedalsR, pedalsG, pedalsB);
+//   rotateX(PI);
+//   rotateY(2 * PI);
+//   drawPedals(v);
+//   pop();
+// }
+//
 
 function writeArray() {
   // two dimensional array stores values for noise space
@@ -129,6 +159,8 @@ function writeArray() {
   for (let x = 0; x < columns; x++) {
     flowerColours[x] = new Array(rows);
     flowerAngles[x] = new Array(rows);
+    flowers[x] = new Array(rows);
+    movements[x] = new Array(rows);
     for (let y = 0; y < rows - 1; y++)  {
       flowerColours[x][y] = map(noise(xOffset,yOffset), 0, 1, 0, 255);
       flowerAngles[x][y] = map(noise(xOffset, yOffset), 0, 1, PI, 2 * PI);
@@ -153,25 +185,33 @@ function drawGrass() {
   }
 }
 
-function drawFlowers(z) {
+function drawFlowers() {
+  randomSeed = (99);
   translate(-width/2, -height/2);
   for (let x = 0; x < columns; x++) {
     for (let y = 0; y < rows - 1; y++) {
       // draw patches of flowers using noise
       if (flowerColours[x][y] > 155) {
-        drawFlower(x * 10, y * 10, z, 255, flowerColours[x][y], flowerColours[x][y], flowerAngles[x][y]);
+        flowers.push(drawFlower(x * 10, y * 10, 0, 255, flowerColours[x][y], flowerColours[x][y], flowerAngles[x][y]));
+        movements.push(0);
+    }
+  }
+      if (mousePressed) {
+        r = int(random(flowers[0][0], flowers[columns - 1][rows - 1]));
+        flowers[r][r] = drawFlower(r * 10, r * 10, 0, 255, flowerColours[r][r], flowerColours[r][r], flowerAngles[r][r])
       }
     }
   }
+
+function movement(z) {
+  levitate.ay = levitate.accel;
+  levitate.vy = levitate.vy + levitate.ay;
+  levitate.vy = constrain(levitate.vy, 0, levitate.maxSpeed);
+  z = z + levitate.vy;
 }
 
-
-
 function mousePressed() {
-  user.ay = user.accel;
-  user.vy = user.vy + user.ay;
-  user.vy = constrain(user.vy, 0, user.maxSpeed);
-  user.move = user.move + user.vy;
+  movement();
 }
 
   // else if (!(mouseIsPressed) && user.vy > 0) {
