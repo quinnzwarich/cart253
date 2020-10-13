@@ -28,7 +28,6 @@ let levitate = {
   ay: 0,
   maxSpeed: 2,
   accel: 0.1,
-  move: 0
 }
 
 let cnv;
@@ -186,6 +185,8 @@ function drawGrass() {
 }
 
 function drawFlowers() {
+  movement();
+
   randomSeed = (99);
   translate(-width/2, -height/2);
   for (let x = 0; x < columns; x++) {
@@ -196,18 +197,18 @@ function drawFlowers() {
         movements.push(0);
     }
   }
-      if (mousePressed) {
+      if (mouseIsPressed) {
         r = int(random(flowers[0][0], flowers[columns - 1][rows - 1]));
-        flowers[r][r] = drawFlower(r * 10, r * 10, 0, 255, flowerColours[r][r], flowerColours[r][r], flowerAngles[r][r])
+        flowers[r][r] = drawFlower(r * 10, r * 10, z, 255, flowerColours[r][r], flowerColours[r][r], flowerAngles[r][r])
       }
     }
   }
 
-function movement(z) {
-  levitate.ay = levitate.accel;
-  levitate.vy = levitate.vy + levitate.ay;
-  levitate.vy = constrain(levitate.vy, 0, levitate.maxSpeed);
-  z = z + levitate.vy;
+function movement(z = 0, ay = 0, vy = 0) {
+  ay = levitate.accel;
+  vy = vy + ay;
+  vy = constrain(vy, 0, levitate.maxSpeed);
+  z = z + vy;
 }
 
 function mousePressed() {
