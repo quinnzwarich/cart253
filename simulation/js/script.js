@@ -65,6 +65,7 @@ function preload() {
 }
 
 function setup() {
+
   // aligns the canvas so that it displays from the center of the window
   // taken from the wiki
   let cnv = createCanvas(1000, 1000, WEBGL);
@@ -118,8 +119,8 @@ function drawStem() {
   line(stem.x1, stem.y1, stem.x2, stem.y2);
 }
 
+// if the background were drawn in setup, you would see multiples of the flowers as they grew !
 function title() {
-  //if the background were drawn in setup, you would see multiples of the flowers as they grew !
   background(0, 127, 255);
 
   push();
@@ -186,6 +187,7 @@ function lovesMeNot() {
 }
 
 function writeArray() {
+
   // two dimensional arrays store values from noise space
   // I learned concepts involving arrays from the coding train
   let xOffset = 0;
@@ -210,7 +212,6 @@ function writeArray() {
 
 function drawGrass() {
   translate(-width / 2, -height / 2);
-  // draw grass
   push();
   translate(0, 0, 150);
   noStroke();
@@ -223,6 +224,7 @@ function drawFlowers() {
   randomSeed = 99;
   translate(-width / 2, -height / 2);
 
+  // levitation accelerates as the user continues to press
   if (mouseIsPressed) {
     movements[randomPick.x][randomPick.y] =
       movements[randomPick.x][randomPick.y] + levitate.accel;
@@ -237,6 +239,7 @@ function drawFlowers() {
   }
   for (let x = 0; x < columns; x++) {
     for (let y = 0; y < rows - 1; y++) {
+
       // draws patches of flowers according to noise values
       // if the flower is being levitated change its colour
       if (flowerColours[x][y] > 155) {
