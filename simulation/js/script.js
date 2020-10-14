@@ -31,6 +31,11 @@ let levitate = {
 
 let cnv;
 let font;
+let note1;
+let note2;
+let note3;
+let note4;
+let note5;
 
 let frames;
 
@@ -47,7 +52,12 @@ let flowerColours = new Array(columns);
 let state = `title`;
 
 function preload() {
-  font = loadFont('assets/fonts/england.ttf')
+  font = loadFont('assets/fonts/england.ttf');
+  note1 = loadSound(`assets/sounds/Fsharp3.wav`);
+  note2 = loadSound(`assets/sounds/A3.wav`);
+  note3 = loadSound(`assets/sounds/B3.wav`);
+  note4 = loadSound(`assets/sounds/Csharp4.wav`);
+  note1 = loadSound(`assets/sounds/E4.wav`);
 }
 
 function setup() {
@@ -71,8 +81,11 @@ function draw() {
   if (state === `title`) {
     title();
   }
-  if (state === `lovesMe`) {
+  else if (state === `lovesMe`) {
     lovesMe();
+  }
+  else if (state === `lovesMeNot`) {
+    lovesMeNot();
   }
 }
 
@@ -138,8 +151,50 @@ function title() {
   rotateX(PI/3);
   drawFlowers();
   pop();
+}
 
-  frames.html(floor(frameRate()));
+function lovesMe() {
+  background(0, 127, 255);
+
+  push();
+  fill(255);
+  rotateX(PI/3);
+  translate(-87.5, 600, 250);
+  textFont(font);
+  textSize(35);
+  text(`loves me`, 0, 0);
+  pop();
+
+  push();
+  rotateX(PI/3);
+  drawGrass();
+  pop();
+  push();
+  rotateX(PI/3);
+  drawFlowers();
+  pop();
+}
+
+function lovesMeNot() {
+  background(0, 127, 255);
+
+  push();
+  fill(255);
+  rotateX(PI/3);
+  translate(-87.5, 600, 250);
+  textFont(font);
+  textSize(35);
+  text(`loves me not`, 0, 0);
+  pop();
+
+  push();
+  rotateX(PI/3);
+  drawGrass();
+  pop();
+  push();
+  rotateX(PI/3);
+  drawFlowers();
+  pop();
 }
 
 function writeArray() {
@@ -156,12 +211,12 @@ function writeArray() {
     for (let y = 0; y < rows - 1; y++)  {
       flowerColours[x][y] = map(noise(xOffset,yOffset), 0, 1, 0, 255);
       flowerAngles[x][y] = map(noise(xOffset, yOffset), 0, 1, PI, 2 * PI);
-      yOffset = yOffset + 1.5;
+      yOffset = yOffset + 1.75;
 
       movements[x][y] = 0;
       zCoordinates[x][y] = 0;
     }
-    xOffset = xOffset + 1.5;
+    xOffset = xOffset + 1.75;
   }
 }
 
@@ -209,7 +264,6 @@ function drawFlowers() {
 // }
 
 let randomPick;
-let pickedFlowerZ = 0;
 
 function mousePressed() {
   randomPick = {
@@ -217,11 +271,37 @@ function mousePressed() {
     y: floor(random(rows))
   };
 
-  while(flowerColours[randomPick.x][randomPick.y] <= 155) {
+  while(flowerColours[randomPick.x][randomPick.y] < 155) {
     randomPick = {
       x: floor(random(columns)),
       y: floor(random(rows))
     };
+  }
+  if (flowerColours[randomPick.x][randomPick.y] > 155) {
+    if (state === `title`) {
+      state = `lovesMe`;
+    }
+    else if (state === `lovesMe`) {
+      state = `lovesMeNot`;
+    }
+    else if (state === `lovesMeNot`) {
+      state = `lovesMe`;
+    }
+  }
+  if (flowerColours[randomPick.x][randomPick.y] > 155 && flowerColours[randomPick.x][randomPick.y] <= 175) {
+    note1.play();
+  }
+  else if (flowerColours[randomPick.x][randomPick.y] > 175 && flowerColours[randomPick.x][randomPick.y] <= 195) {
+    note2.play();
+  }
+  else if (flowerColours[randomPick.x][randomPick.y] > 195 && flowerColours[randomPick.x][randomPick.y] <= 215) {
+    note3.play();
+  }
+  else if (flowerColours[randomPick.x][randomPick.y] > 215 && flowerColours[randomPick.x][randomPick.y] <= 235) {
+    note4.play();
+  }
+  else if (flowerColours[randomPick.x][randomPick.y] > 235 && flowerColours[randomPick.x][randomPick.y] <= 255) {
+    note5.play();
   }
 }
 
