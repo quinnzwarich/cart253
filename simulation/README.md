@@ -1,3 +1,7 @@
-# Template p5 project
+# Project 1
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+This simulation generates a field of flowers using perlin noise.
+The idea behind the interaction is that it becomes an unending game of
+"loves me... loves me not..." that the user plays through uprooting flowers
+(as opposed to delicately plucking pedals). In doing so, they also generate notes
+from a minor pentatonic scale.
