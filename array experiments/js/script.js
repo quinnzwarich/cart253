@@ -35,7 +35,7 @@ function draw() {
     let position = circle.trail[i];
     let shade = map(i, 0, circle.trail.length, 0, 255);
     noStroke();
-    fill(255, 255, 255, shade);
+    fill(shade, shade, shade, shade);
     ellipse(position.x, position.y, circle.size);
   }
 
