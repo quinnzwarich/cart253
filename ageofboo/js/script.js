@@ -7,6 +7,11 @@ Pippin Barr
 Here is a description of this template p5 project.
 **************************************************/
 
+let user = {
+  x: 0,
+  y: 0,
+  prevX: 0
+};
 
 let spookyMusic
 let booLaugh;
@@ -107,6 +112,18 @@ function displayBoo(boo) {
   pop();
 }
 
+function moveAndDisplayUser() {
+  noCursor();
+
+  user.x = mouseX;
+  user.y = mouseY;
+
+  push();
+  imageMode(CENTER);
+  image(feistyBoo, user.x, user.y, 415, 415);
+  pop();
+}
+
 function title() {
   push();
   textFont(marioFont);
@@ -119,6 +136,8 @@ function title() {
 }
 
 function keepEmTogether() {
+  moveAndDisplayUser();
+
   for (let i = 0; i < 5; i++) {
     moveBooAndCheckOffscreen(booWho[i]);
   }
