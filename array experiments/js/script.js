@@ -80,7 +80,7 @@ function moveBooAndCheckOffscreen(boo) {
     }
     if (boo.x < 0 || boo.x > width || boo.y < 0 || boo.y > height) {
       state = `youMadeBooFloatAway`;
-      spookyMusic.setVolume(0);
+      spookyMusic.stop();
     }
   }
   else {
@@ -89,7 +89,7 @@ function moveBooAndCheckOffscreen(boo) {
 
     if (boo.x < 0 || boo.x > width || boo.y < 0 || boo.y > height) {
       state = `booFloatedAway`;
-      spookyMusic.setVolume(0);
+      spookyMusic.stop();
     }
   }
 
