@@ -10,13 +10,16 @@ Here is a description of this template p5 project.
 let user = {
   x: 0,
   y: 0,
-  prevX: 0
+  xPositions: [],
+  maxPositions: 2,
+  direction: [`left`, `right`]
 };
 
 let spookyMusic
 let booLaugh;
 let shyBoo;
 let feistyBoo;
+let invFeistyBoo;
 let marioFont;
 
 let booWho = [];
@@ -24,7 +27,8 @@ let booWho = [];
 let state = `title`;
 
 function preload() {
-  marioFont = loadFont(`assets/fonts/SuperMario256.ttf`)
+  marioFont = loadFont(`assets/fonts/SuperMario256.ttf`);
+  invFeistyBoo = loadImage(`assets/images/boohorizontal.png`);
   feistyBoo = loadImage(`assets/images/boo.png`);
   shyBoo = loadImage(`assets/images/shyboo.png`);
   booLaugh = loadSound(`assets/sounds/editedboolaugh.mp3`);
@@ -33,7 +37,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     booWho[i] = createBoo(random(width/4, 3 * width/4), random(height/4, 3 * height/4), random(0, 10), random (0,10), random(0, 0.1));
   }
 }
@@ -118,10 +122,31 @@ function moveAndDisplayUser() {
   user.x = mouseX;
   user.y = mouseY;
 
-  push();
-  imageMode(CENTER);
-  image(feistyBoo, user.x, user.y, 415, 415);
-  pop();
+  let previousX = user.x;
+
+  user.xPositions.push(previousX);
+  if (user.xPositions.length > user.maxPositions) {
+    user.xPositions.shift();
+  }
+
+  if (user.xPositions[0] < user.xPositions[1]) {
+    user.direction = `left`;
+  }
+  else if (user.xPositions[0] > user.xPositions[1]) {
+    user.direction = `right`;
+  }
+  if (user.direction === `left`) {
+    push();
+    imageMode(CENTER);
+    image(invFeistyBoo, user.x, user.y, 415, 415);
+    pop();
+  }
+  else if (user.direction === `right`) {
+    push();
+    imageMode(CENTER);
+    image(feistyBoo, user.x, user.y, 415, 415);
+    pop();
+  }
 }
 
 function title() {
@@ -138,10 +163,10 @@ function title() {
 function keepEmTogether() {
   moveAndDisplayUser();
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     moveBooAndCheckOffscreen(booWho[i]);
   }
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     displayBoo(booWho[i]);
   }
 }
