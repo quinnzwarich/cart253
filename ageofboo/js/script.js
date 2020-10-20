@@ -37,7 +37,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     booWho[i] = createBoo(random(width/4, 3 * width/4), random(height/4, 3 * height/4), random(0, 10), random (0,10), random(0, 0.1));
   }
 }
@@ -48,7 +48,7 @@ function createBoo(x, y, tx, ty, increment) {
     y: y,
     vx: 0,
     vy: 0,
-    speed: 8,
+    speed: 0,
     tx: tx,
     ty: ty,
     increment: increment,
@@ -62,6 +62,9 @@ function createBoo(x, y, tx, ty, increment) {
 function moveBooAndCheckOffscreen(boo) {
   boo.tx = boo.tx + boo.increment;
   boo.ty = boo.ty + boo.increment;
+
+  boo.speed = boo.speed + 0.05;
+  boo.speed = constrain(boo.speed, 0, 20);
 
   let noiseX = noise(boo.tx);
   let noiseY = noise(boo.ty);
@@ -163,10 +166,10 @@ function title() {
 function keepEmTogether() {
   moveAndDisplayUser();
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     moveBooAndCheckOffscreen(booWho[i]);
   }
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     displayBoo(booWho[i]);
   }
 }
