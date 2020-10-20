@@ -21,6 +21,7 @@ let user = {
 let spookyMusic;
 let booLaugh;
 let shyBoo;
+let invShyBoo;
 let feistyBoo;
 let invFeistyBoo;
 let marioFont;
@@ -33,6 +34,7 @@ function preload() {
   marioFont = loadFont(`assets/fonts/SuperMario256.ttf`);
   invFeistyBoo = loadImage(`assets/images/boohorizontal.png`);
   feistyBoo = loadImage(`assets/images/boo.png`);
+  invShyBoo = loadImage(`assets/images/shyboohorizontal.png`);
   shyBoo = loadImage(`assets/images/shyboo.png`);
   booLaugh = loadSound(`assets/sounds/editedboolaugh.mp3`);
   spookyMusic = loadSound(`assets/sounds/ghosthouse.mp3`);
@@ -60,7 +62,7 @@ function createBoo(x, y, tx, ty, increment) {
     y: y,
     vx: 0,
     vy: 0,
-    nervous: 0,
+    nervous: 5,
     tx: tx,
     ty: ty,
     increment: increment,
@@ -75,10 +77,6 @@ function moveBooAndCheckOffscreen(boo) {
   boo.tx = boo.tx + boo.increment;
   boo.ty = boo.ty + boo.increment;
 
-  // increase their nervous so that the simulation becomes more frantic as it progresses
-  boo.nervous = boo.nervous + 0.05;
-  boo.nervous = constrain(boo.nervous, 0, 20);
-
   let noiseX = noise(boo.tx);
   let noiseY = noise(boo.ty);
 
@@ -88,6 +86,11 @@ function moveBooAndCheckOffscreen(boo) {
 
   // if user enters within the approximate diameter of the boo make it flee
   if (d1 < boo.size) {
+    // increase nervous levels when in proximity
+    boo.nervous = boo.nervous + 0.1;
+    boo.nervous = constrain(boo.nervous, 0, 25);
+
+    // it is up to you to decide who is laughing
     if (!booLaugh.isPlaying()) {
       booLaugh.play();
     }
@@ -115,6 +118,7 @@ function moveBooAndCheckOffscreen(boo) {
     boo.vx = map(noiseX, 0, 1, -boo.nervous, boo.nervous);
     boo.vy = map(noiseY, 0, 1, -boo.nervous, boo.nervous);
 
+    // assume the boo left at least partially of its own volition
     if (boo.x < 0 || boo.x > width || boo.y < 0 || boo.y > height) {
       state = `booFloatedAway`;
       spookyMusic.setVolume(0);
@@ -130,11 +134,21 @@ function moveBooAndCheckOffscreen(boo) {
 function displayBoo(boo) {
   let d2 = dist(mouseX, mouseY, boo.x, boo.y);
   let shade = map(d2, (2 * width) / 3, 0, 0, 255);
-  push();
-  imageMode(CENTER);
-  tint(shade, shade);
-  image(shyBoo, boo.x, boo.y);
-  pop();
+
+  // boos look in opposite direction of the user
+  if (boo.x < user.x) {
+    push();
+    imageMode(CENTER);
+    tint(shade, shade);
+    image(invShyBoo, boo.x, boo.y);
+    pop();
+  } else if (boo.x > user.x) {
+    push();
+    imageMode(CENTER);
+    tint(shade, shade);
+    image(shyBoo, boo.x, boo.y);
+    pop();
+  }
 }
 
 function moveAndDisplayUser() {
@@ -153,7 +167,7 @@ function moveAndDisplayUser() {
 
   // I originally did this just with conditionals
   // thank you Sam for the suggestion to use states!
-  // orientation is no longer affected by the order in which the conditionals were placed
+  // orientation is no longer affected by the order in which the conditionals are placed
   if (user.xPositions[0] < user.xPositions[1]) {
     user.direction = `left`;
   } else if (user.xPositions[0] > user.xPositions[1]) {
