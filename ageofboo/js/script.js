@@ -60,7 +60,7 @@ function createBoo(x, y, tx, ty, increment) {
     y: y,
     vx: 0,
     vy: 0,
-    speed: 0,
+    nervous: 0,
     tx: tx,
     ty: ty,
     increment: increment,
@@ -75,9 +75,9 @@ function moveBooAndCheckOffscreen(boo) {
   boo.tx = boo.tx + boo.increment;
   boo.ty = boo.ty + boo.increment;
 
-  // increase their speed so that the simulation becomes more frantic as it progresses
-  boo.speed = boo.speed + 0.05;
-  boo.speed = constrain(boo.speed, 0, 20);
+  // increase their nervous so that the simulation becomes more frantic as it progresses
+  boo.nervous = boo.nervous + 0.05;
+  boo.nervous = constrain(boo.nervous, 0, 20);
 
   let noiseX = noise(boo.tx);
   let noiseY = noise(boo.ty);
@@ -92,15 +92,15 @@ function moveBooAndCheckOffscreen(boo) {
       booLaugh.play();
     }
     if (dx < 0) {
-      boo.vx = -boo.speed;
+      boo.vx = -boo.nervous;
     } else if (dx > 0) {
-      boo.vx = boo.speed;
+      boo.vx = boo.nervous;
     }
 
     if (dy < 0) {
-      boo.vy = -boo.speed;
+      boo.vy = -boo.nervous;
     } else if (dy > 0) {
-      boo.vy = boo.speed;
+      boo.vy = boo.nervous;
     }
     // if a boo leaves the bounds while you are within contact,
     // simulation will assume that you were wbat pushed them out
@@ -112,8 +112,8 @@ function moveBooAndCheckOffscreen(boo) {
   // if not in contact,
   // have them act in accordance to progression through noise space
   else {
-    boo.vx = map(noiseX, 0, 1, -boo.speed, boo.speed);
-    boo.vy = map(noiseY, 0, 1, -boo.speed, boo.speed);
+    boo.vx = map(noiseX, 0, 1, -boo.nervous, boo.nervous);
+    boo.vy = map(noiseY, 0, 1, -boo.nervous, boo.nervous);
 
     if (boo.x < 0 || boo.x > width || boo.y < 0 || boo.y > height) {
       state = `booFloatedAway`;
