@@ -1,14 +1,25 @@
 
 class Paddle {
-  constructor(w, h) {
-    this.width = w;
-    this.height = h;
-    this.x = 0;
-    this.y = height - this.height / 2;
+  constructor(x, y, angle) {
+    this.width = width/6;
+    this.height = height/42;
+    this.x = x;
+    this.y = y;
+    this.vx = 0;
+    this.speed = 1;
+    this.angle = angle;
   }
 
   move() {
-    this.x = mouseX;
+    if (keyIsDown(LEFT_ARROW)) {
+      this.vx = -(this.speed++);
+    }
+    else if (keyISDown(RIGHT_ARROW)) {
+      this.vx = this.speed++;
+    }
+    else {
+      this.vx = 0;
+    }
   }
 
   display() {
@@ -16,7 +27,9 @@ class Paddle {
     fill(255);
     noStroke();
     rectMode(CENTER);
-    rect(this.x, this.y, this.width, this.height);
+    translate(this.width + this.x, (this.height * 6) + this.y);
+    rotate(this.angle + this.vx);
+    rect(0, 0, this.width, this.height);
     pop();
   }
 }
