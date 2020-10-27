@@ -31,8 +31,10 @@ function setup() {
     for (let j = 0; j < rows; j++) {
       let scaleX = width / columns;
       let scaleY = height / rows;
+      let pWidth = width / 3;
+      let pHeight = height / 42;
       let angle = random(0, 2 * PI);
-      let paddle = new Paddle(i * scaleX, j * scaleY, angle);
+      let paddle = new Paddle(i * scaleX, j * scaleY, pWidth, pHeight, angle);
       paddles.push(paddle);
     }
   }
@@ -47,7 +49,7 @@ function draw() {
   for (let i = 0; i < paddles.length; i++) {
     let paddle = paddles[i];
     paddle.display();
-    //paddle.move();
+    paddle.move();
   }
 
   for (let i = 0; i < balls.length; i++) {

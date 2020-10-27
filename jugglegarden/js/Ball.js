@@ -30,16 +30,16 @@ class Ball {
     }
   }
 
-  bounce(paddle) {
+  bounce(paddles) {
     if (
-      this.x > paddle.x - paddle.width / 2 &&
-      this.x < paddle.x + paddle.width / 2 &&
-      this.y + this.size / 2 > paddle.y - paddle.height / 2 &&
-      this.y - this.size / 2 < paddle.y + paddle.height / 2
+      this.x > paddles.x - paddles.width / 2 &&
+      this.x < paddles.x + paddles.width / 2 &&
+      this.y + this.size / 2 > paddles.y - paddles.height / 2 &&
+      this.y - this.size / 2 < paddles.y + paddles.height / 2
     ) {
       // bounce off paddle
       let dx = this.x - paddle.x;
-      this.vx = this.vx + map(dx, -paddle.width/2, paddle.width/2, -2, 2);
+      this.vx = this.vx + map(dx, -paddles.width/2, paddles.width/2, -2, 2);
 
       this.vy = -this.vy;
       this.ay = 0;
