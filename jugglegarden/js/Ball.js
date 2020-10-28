@@ -32,35 +32,32 @@ class Bear {
     this.x = this.x + this.vx;
     this.y = this.y + this.vy;
 
-    if (this.y - this.headSize/2 > height) {
+    if (this.y - this.headSize / 2 > height) {
       this.active = false;
     }
   }
 
   bounce(cloud) {
-      if (
-        this.x > cloud.x - cloud.width / 2 &&
-        this.x < cloud.x + cloud.width / 2 &&
-        this.y + (this.headSize - 17) / 2 > cloud.y - cloud.height / 2 &&
-        this.y - (this.headSize - 17) / 2 < cloud.y + cloud.height / 2
-      ) {
-        // bounce off paddle
-        let dx = this.x - cloud.x;
-        this.vx = this.vx + map(dx, -cloud.width/2, cloud.width/2, -2, 2);
+    if (
+      this.x > cloud.x - cloud.width / 2 &&
+      this.x < cloud.x + cloud.width / 2 &&
+      this.y + (this.headSize - 17) / 2 > cloud.y - cloud.height / 2 &&
+      this.y - (this.headSize - 17) / 2 < cloud.y + cloud.height / 2
+    ) {
+      // bounce off paddle
+      let dx = this.x - cloud.x;
+      this.vx = this.vx + map(dx, -cloud.width / 2, cloud.width / 2, -2, 2);
 
-        this.vy = -this.vy;
-        this.ay = 0;
-
-      }
-      else if (this.x >= width) {
-        // appear from the left
-        this.x = 0;
-      }
-      else if (this.x <= 0) {
-        // appear from the right
-        this.x = width;
-      }
+      this.vy = -this.vy;
+      this.ay = 0;
+    } else if (this.x >= width) {
+      // appear from the left
+      this.x = 0;
+    } else if (this.x <= 0) {
+      // appear from the right
+      this.x = width;
     }
+  }
 
   display() {
     // outer ear

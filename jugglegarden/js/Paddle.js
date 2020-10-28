@@ -7,7 +7,9 @@ class Cloud {
     this.x = x;
     this.y = y;
   }
-  
+
+  // generates clouds by placing randomly sized ellipses within the area of a rectangle at random coordinates
+  // hit box can then just become the area in which they're generated
   display(seed) {
     randomSeed(seed);
     for (let i = 0; i < this.cloudTotal; i++) {
