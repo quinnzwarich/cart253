@@ -9,8 +9,12 @@ Here is a description of this template p5 project.
 
 let gravityForce = 0.0025;
 let clouds = [];
-let balls = [];
-let numBalls = 3;
+let bears = [];
+let numBears = 10;
+let dissipateLength = 60 * 2.5;
+
+let state = `title`;
+
 
 // setup()
 //
@@ -18,11 +22,11 @@ let numBalls = 3;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  for (let i = 0; i < numBalls; i++) {
+  for (let i = 0; i < numBears; i++) {
     let x = random(0, width);
-    let y = random(200, -100);
-    let ball = new Ball(x, y);
-    balls.push(ball);
+    let y = random(-400, -100);
+    let bear = new Bear(x, y);
+    bears.push(bear);
   }
 }
 
@@ -30,24 +34,29 @@ function setup() {
 //
 // Description of draw() goes here.
 function draw() {
-  background(0);
+  background(0, 127, 255);
 
-  for (let i = 0; i < clouds.length; i++) {
-    let cloud = clouds[i];
-    cloud.display(i);
-  }
-
-  for (let i = 0; i < balls.length; i++) {
-    let ball = balls[i];
-    if (ball.active) {
-      // ball.gravity(gravityForce);
-      // ball.move();
-      ball.display();
+  for (let i = 0; i < bears.length; i++) {
+    let bear = bears[i];
+    if (bear.active) {
+      bear.gravity(gravityForce);
+      for (let j = 0; j < clouds.length; j++) {
+        let cloud = clouds[j];
+        cloud.display(j);
+        bear.bounce(clouds[j]);
+      }
+      bear.move();
+      bear.display();
     }
   }
+}
+
+function dissipate() {
+  clouds.shift();
 }
 
 function mousePressed() {
   let cloud = new Cloud(mouseX, mouseY);
   clouds.push(cloud);
+  setTimeout(dissipate, 2000);
 }

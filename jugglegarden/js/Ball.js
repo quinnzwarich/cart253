@@ -1,4 +1,4 @@
-class Ball {
+class Bear {
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -6,6 +6,7 @@ class Ball {
     this.vy = 0;
     this.ax = 0;
     this.ay = 0;
+    this.addBear = false;
     this.maxSpeed = 10;
     this.active = true;
     this.headSize = 100;
@@ -36,25 +37,30 @@ class Ball {
     }
   }
 
-  bounce(paddle) {
+  bounce(cloud) {
       if (
-        this.x > paddle.x - paddle.width / 2 &&
-        this.x < paddle.x + paddle.width / 2 &&
-        this.y + this.headSize / 2 > paddle.y - paddle.height / 2 &&
-        this.y - this.headSize / 2 < paddle.y + paddle.height / 2
+        this.x > cloud.x - cloud.width / 2 &&
+        this.x < cloud.x + cloud.width / 2 &&
+        this.y + (this.headSize - 17) / 2 > cloud.y - cloud.height / 2 &&
+        this.y - (this.headSize - 17) / 2 < cloud.y + cloud.height / 2
       ) {
         // bounce off paddle
-        let dx = this.x - paddle.x;
-        this.vx = this.vx + map(dx, -paddle.width/2, paddle.width/2, -2, 2);
+        let dx = this.x - cloud.x;
+        this.vx = this.vx + map(dx, -cloud.width/2, cloud.width/2, -2, 2);
 
         this.vy = -this.vy;
         this.ay = 0;
+
       }
-      else if (this.x >= width || this.x <= 0) {
-        // bounce off walls
-        this.vx = -this.vx;
+      else if (this.x >= width) {
+        // appear from the left
+        this.x = 0;
       }
-  }
+      else if (this.x <= 0) {
+        // appear from the right
+        this.x = width;
+      }
+    }
 
   display() {
     // outer ear

@@ -7,7 +7,7 @@ class Cloud {
     this.x = x;
     this.y = y;
   }
-
+  
   display(seed) {
     randomSeed(seed);
     for (let i = 0; i < this.cloudTotal; i++) {
