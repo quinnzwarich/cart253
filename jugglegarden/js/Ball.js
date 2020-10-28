@@ -7,8 +7,14 @@ class Ball {
     this.ax = 0;
     this.ay = 0;
     this.maxSpeed = 10;
-    this.size = 40;
     this.active = true;
+    this.headSize = 100;
+    this.eyeSize = 27;
+    this.earSize = 31;
+    this.noseSize = 11;
+    this.r = 256;
+    this.g = 128;
+    this.b = 64;
   }
 
   gravity(force) {
@@ -25,36 +31,70 @@ class Ball {
     this.x = this.x + this.vx;
     this.y = this.y + this.vy;
 
-    if (this.y - this.size/2 > height) {
+    if (this.y - this.headSize/2 > height) {
       this.active = false;
     }
   }
 
-  bounce(paddles) {
-    if (
-      this.x > paddles.x - paddles.width / 2 &&
-      this.x < paddles.x + paddles.width / 2 &&
-      this.y + this.size / 2 > paddles.y - paddles.height / 2 &&
-      this.y - this.size / 2 < paddles.y + paddles.height / 2
-    ) {
-      // bounce off paddle
-      let dx = this.x - paddle.x;
-      this.vx = this.vx + map(dx, -paddles.width/2, paddles.width/2, -2, 2);
+  bounce(paddle) {
+      if (
+        this.x > paddle.x - paddle.width / 2 &&
+        this.x < paddle.x + paddle.width / 2 &&
+        this.y + this.headSize / 2 > paddle.y - paddle.height / 2 &&
+        this.y - this.headSize / 2 < paddle.y + paddle.height / 2
+      ) {
+        // bounce off paddle
+        let dx = this.x - paddle.x;
+        this.vx = this.vx + map(dx, -paddle.width/2, paddle.width/2, -2, 2);
 
-      this.vy = -this.vy;
-      this.ay = 0;
-    }
-    else if (this.x >= width || this.x <= 0) {
-      // bounce off walls
-      this.vx = -this.vx;
-    }
+        this.vy = -this.vy;
+        this.ay = 0;
+      }
+      else if (this.x >= width || this.x <= 0) {
+        // bounce off walls
+        this.vx = -this.vx;
+      }
   }
 
   display() {
+    // outer ear
+    push();
+    fill(this.r, this.g, this.b);
+    ellipse(this.x + 24, this.y - 32, this.earSize - 3, this.earSize);
+    ellipse(this.x - 24, this.y - 32, this.earSize - 3, this.earSize);
+    pop();
+
+    // inner ear
+    push();
+    fill(this.r / 2, this.g / 2, this.b / 2);
+    ellipse(this.x + 24, this.y - 34, this.earSize / 2 - 5, this.earSize / 2);
+    ellipse(this.x - 24, this.y - 34, this.earSize / 2 - 5, this.earSize / 2);
+    pop();
+
+    // head
+    push();
+    fill(this.r, this.g, this.b);
+    ellipse(this.x, this.y, this.headSize, this.headSize - 17);
+    pop();
+
+    // retinas
     push();
     fill(255);
-    stroke(0);
-    ellipse(this.x, this.y, this.size);
+    ellipse(this.x + 21, this.y - 16, this.eyeSize);
+    ellipse(this.x - 21, this.y - 16, this.eyeSize);
+    pop();
+
+    // pupils
+    push();
+    fill(0);
+    ellipse(this.x + 21, this.y - 16, this.eyeSize - 10);
+    ellipse(this.x - 21, this.y - 16, this.eyeSize - 10);
+    pop();
+
+    // nose
+    push();
+    fill(this.r / 2, this.g / 2, this.b / 2);
+    ellipse(this.x, this.y, this.noseSize, this.noseSize / 2);
     pop();
   }
 }

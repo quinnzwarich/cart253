@@ -1,32 +1,24 @@
-
-class Paddle {
-  constructor(x, y, w, h, angle) {
-    this.width = w;
-    this.height = h;
+class Cloud {
+  constructor(x, y) {
+    this.width = 300;
+    this.height = 75;
+    this.cloudTotal = 9;
+    this.cloudSize = 0;
     this.x = x;
     this.y = y;
-    this.rotate = 0;
-    this.speed = 0.05;
-    this.angle = angle;
   }
 
-  move() {
-    if (keyIsDown(LEFT_ARROW)) {
-      this.rotate = this.rotate + this.speed;
+  display(seed) {
+    randomSeed(seed);
+    for (let i = 0; i < this.cloudTotal; i++) {
+      let rx = random(this.x - this.width / 2, this.x + this.width / 2);
+      let ry = random(this.y - this.height / 2, this.y + this.height / 2);
+      this.cloudSize = random(75, 125);
+      push();
+      noStroke();
+      fill(255);
+      ellipse(rx, ry, this.cloudSize);
+      pop();
     }
-    else if (keyIsDown(RIGHT_ARROW)) {
-      this.rotate = this.rotate - this.speed;
-    }
-  }
-
-  display() {
-    push();
-    fill(255);
-    noStroke();
-    rectMode(CENTER);
-    translate((this.width/2) + this.x, (this.height * 6) + this.y);
-    //rotate(this.angle + this.rotate);
-    rect(0, 0, this.width, this.height);
-    pop();
   }
 }
