@@ -7,36 +7,39 @@ class Chevron {
     this.offset = 25;
   }
 
+  // this design was initially a lot more simple
+  // I had to complicate things in order to make it work in WEBGL
   pattern() {
     push();
+    translate(this.x, this.y);
     noStroke();
-    fill(255);
+    fill(0);
+    // topmost downward facing isosceles triangles
     beginShape();
     vertex(0, 0);
     vertex(this.width / 2, this.height - this.offset);
     vertex(this.width, 0);
-    vertex(this.width, this.offset);
+    endShape(CLOSE);
+    // left facing scalene triangle
+    beginShape();
+    vertex(this.width, this.height - this.offset);
     vertex(this.width / 2, this.height);
-    vertex(0, this.offset);
-    vertex(0, 0);
-    endShape();
-    pop();
-  }
-
-  floorColour() {
-    push();
-    noStroke();
-    fill(0);
-    rect(0, 0, this.width, this.height);
+    vertex(this.width, this.height);
+    endShape(CLOSE);
+    // right facing scalene triangle
+    beginShape();
+    vertex(0, this.height - this.offset);
+    vertex(this.width / 2, this.height);
+    vertex(0, this.height);
+    endShape(CLOSE);
     pop();
   }
 
   display() {
     push();
-    translate(this.x, this.y);
-    this.floorColour();
+    translate(width / 2, height / 2);
+    rotateX(PI / 3);
     this.pattern();
     pop();
   }
-
 }

@@ -15,7 +15,7 @@ let rows = 20;
 //
 // Description of setup() goes here.
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(1000, 1000, WEBGL);
 
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
@@ -31,6 +31,7 @@ function setup() {
 function draw() {
   background(255);
 
+  translate(- width, -height / 2);
   for (let i = 0; i < tiles.length; i++) {
     let tile = tiles[i];
     tile.display();
