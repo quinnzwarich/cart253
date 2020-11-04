@@ -13,7 +13,7 @@ class Chevron {
     push();
     translate(this.x, this.y);
     noStroke();
-    fill(0);
+    fill(255);
     // topmost downward facing isosceles triangles
     beginShape();
     vertex(0, 0);
@@ -38,7 +38,7 @@ class Chevron {
   display() {
     push();
     translate(width / 2, height / 2);
-    rotateX(PI / 3);
+    rotateX(PI / 2);
     this.pattern();
     pop();
   }
