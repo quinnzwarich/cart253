@@ -17,8 +17,8 @@ function setup() {
 }
 
 function draw() {
-  background(0);
-  
+  background(55);
+
   oscillator1.phase(0.55);
 }
 
