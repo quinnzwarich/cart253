@@ -9,8 +9,8 @@ Here is a description of this template p5 project.
 
 let tiles = [];
 let curtains = [];
-let columns = 7.5;
-let rows = 30;
+let columns = 12;
+let rows = 24;
 
 let user;
 
@@ -18,11 +18,12 @@ let user;
 //
 // Description of setup() goes here.
 function setup() {
-  createCanvas(750, 750, WEBGL);
+  createCanvas(900, 600, WEBGL);
+  pixelDensity(1);
 
   user = new User();
   user.setState({
-    position: [1150, 150, width],
+    position: [1250, 150, 2 * width/3],
     rotation: [-PI, 0, 0],
     speed: 2,
   });
@@ -39,13 +40,13 @@ function setup() {
     }
     // rotate left with A
     if (keyIsDown(65)) {
-      this.yaw(-0.08);
+      this.yaw(-0.05);
     }
     // rotate right with D
     if (keyIsDown(68)) {
-      this.yaw(0.08);
+      this.yaw(0.05);
     }
-  };
+  }
 
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
@@ -54,10 +55,21 @@ function setup() {
     }
   }
 
-  for (let i = 0; i < columns * 2; i++) {
-    let curtain = new Curtain(-100 * i, 0);
-    curtains.push(curtain);
-  }
+  // render curtains 
+  let leftmostWall = new VerticalWall(-1200, 0);
+  curtains.push(leftmostWall);
+
+  let leftWall = new Corridor(-1200, 200);
+  curtains.push(leftWall);
+
+  let rightmostWall = new VerticalWall(-1200, 1150);
+  curtains.push(rightmostWall);
+
+  let frontWall = new HorizontalWall(-1200, -50);
+  curtains.push(frontWall);
+
+  let backWall = new HorizontalWall(-1200, -1200);
+  curtains.push(backWall);
 }
 
 // draw()
@@ -65,8 +77,6 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(0);
-
-  console.log(user.position);
 
   for (let i = 0; i < tiles.length; i++) {
     let tile = tiles[i];

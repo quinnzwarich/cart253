@@ -2,26 +2,38 @@ class Curtain {
   constructor(x, z) {
     this.x = x;
     this.z = z;
-    this.noiseScale = 0.02;
+    this.noiseScale = 0.2;
+    this.polygons = undefined;
+    this.positionsI = [];
+    this.positionsJ = [];
+
   }
 
   drawCurtain() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < this.polygons / 8; i++) {
       let noiseValue = noise(this.x * this.noiseScale, i * this.noiseScale);
+      // let position1 = [-noiseValue * 80, 0, (i * 8) - noiseValue * 80];
+      // let position2 = [-noiseValue * 80, height, (i * 8) - noiseValue * 80];
+      // this.positionsI.push(position1);
+      // this.positionsJ.push(position2);
+
       push();
-      stroke(255 / noiseValue, 0, 0);
-      translate(this.x - 50, 0, this.z);
+      noStroke();
+      fill(noiseValue * 200, 0, 0);
+      translate(this.x + 30, 0, this.z);
       rotateY(PI / 2);
-      line(-noiseValue * 80, 0, i - noiseValue * 80, -noiseValue * 80, height, i - noiseValue * 80);
+
+      beginShape();
+      vertex(-noiseValue * 80, 0, (i * 8) - noiseValue * 80);
+      vertex(-noiseValue * 80, 0, ((i + 1) * 8) - noiseValue * 80);
+      vertex(-noiseValue * 80, height, ((i + 1) * 8) - noiseValue * 80);
+      vertex(-noiseValue * 80, height, (i * 8) - noiseValue * 80);
+      endShape(CLOSE)
       pop();
     }
   }
 
   display() {
-    push();
-    translate(width / 2, -height / 2);
-    rotateY(PI / 2);
-    this.drawCurtain();
-    pop();
+    // define in child classes
   }
 }
