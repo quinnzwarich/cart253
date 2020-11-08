@@ -1,5 +1,5 @@
 class User extends RoverCam {
-  constructor() {
+  constructor(t) {
     super();
   }
 }

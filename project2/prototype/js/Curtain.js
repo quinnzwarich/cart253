@@ -19,6 +19,7 @@ class Curtain {
 
       push();
       noStroke();
+      // fix fill so that it inverts depending on rotation
       fill(noiseValue * 200, 0, 0);
       translate(this.x + 30, 0, this.z);
       rotateY(PI / 2);
