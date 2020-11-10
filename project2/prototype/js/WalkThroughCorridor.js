@@ -32,6 +32,10 @@ class WalkThroughCorridor extends State {
   positionAudio() {
     this.panning.process(under);
     this.panning.set(700, 150, 100);
+    // in the documentation, this is actually called rollof
+    // of course it doesn't recognize that as a function
+    // it also doesn't describe any number range which it accepts
+    this.panning.rolloff(2);
   }
 
   walk() {
