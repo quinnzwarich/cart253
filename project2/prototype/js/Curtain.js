@@ -1,17 +1,18 @@
 class Curtain {
-  constructor(x, z) {
+  constructor(x, z, rotation) {
     this.x = x;
     this.z = z;
     this.noiseScale = 0.2;
     this.polygons = undefined;
     this.positionsI = [];
     this.positionsJ = [];
-
+    this.rotation = rotation;
   }
 
   drawCurtain() {
     for (let i = 0; i < this.polygons / 8; i++) {
       let noiseValue = noise(this.x * this.noiseScale, i * this.noiseScale);
+
       // let position1 = [-noiseValue * 80, 0, (i * 8) - noiseValue * 80];
       // let position2 = [-noiseValue * 80, height, (i * 8) - noiseValue * 80];
       // this.positionsI.push(position1);
@@ -34,7 +35,13 @@ class Curtain {
     }
   }
 
+  // if horizontal, rotate by PI / 2
+  // if vertical, rotate by PI
   display() {
-    // define in child classes
+    push();
+    translate(width / 2, -height / 2);
+    rotateY(this.rotation);
+    this.drawCurtain();
+    pop();
   }
 }

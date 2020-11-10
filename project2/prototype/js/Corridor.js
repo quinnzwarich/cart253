@@ -1,14 +1,6 @@
 class Corridor extends Curtain {
-  constructor(x, z) {
-    super(x, z);
+  constructor(x, z, rotation) {
+    super(x, z, rotation);
     this.polygons = (columns * 83);
-  }
-
-  display() {
-    push();
-    translate(width / 2, -height / 2);
-    rotateY(PI / 2);
-    this.drawCurtain();
-    pop();
   }
 }

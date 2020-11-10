@@ -15,27 +15,31 @@ let footCount = 5;
 let columns = 12;
 let rows = 24;
 
+let currentState;
 let user;
 let under;
+let trees;
 
 function preload() {
   for (let i = 0; i < footCount; i++) {
     let footstep = loadSound(`assets/sounds/footstep${i + 1}.wav`);
     footsteps.push(footstep);
   }
-
   under = loadSound(`assets/sounds/Under.mp3`);
+  trees = loadSound(`assets/sounds/Trees.mp3`);
 }
 
 function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
 
+  currentState = new WalkThroughCorridor();
+
   user = new User();
   user.setState({
     position: [(width / 18) * 11, 150, (rows * 50) - 100],
     rotation: [-PI / 2, 0, 0],
-    speed: 2,
+    speed: 0.75,
   });
 
   // override controls to prevent user from moving up or down
@@ -67,19 +71,19 @@ function setup() {
   }
 
   // render curtains
-  let leftmostWall = new VerticalWall(-1200, 0);
+  let leftmostWall = new Wall(-1200, 0, PI / 2);
   curtains.push(leftmostWall);
 
-  let leftWall = new Corridor(-1200, 200);
+  let leftWall = new Corridor(-1200, 200, PI / 2);
   curtains.push(leftWall);
 
-  let rightmostWall = new VerticalWall(-1200, 1150);
+  let rightmostWall = new Wall(-1200, 1150, PI / 2);
   curtains.push(rightmostWall);
 
-  let frontWall = new HorizontalWall(-1200, -50);
+  let frontWall = new Wall(-1200, -50, PI);
   curtains.push(frontWall);
 
-  let backWall = new HorizontalWall(-1200, -1200);
+  let backWall = new Wall(-1200, -1200, PI);
   curtains.push(backWall);
 }
 
@@ -87,28 +91,9 @@ function setup() {
 //
 // Description of draw() goes here.
 function draw() {
-  background(0);
-
-  for (let i = 0; i < tiles.length; i++) {
-    let tile = tiles[i];
-    tile.display();
-  }
-
-  for (let i = 0; i < curtains.length; i++) {
-    let curtain = curtains[i];
-    curtain.display();
-  }
+  currentState.draw();
 }
 
-// function keyPressed() {
-//   let gait = random(footsteps);
-//   if (keyIsDown(87) || keyIsDown(83) || keyIsDown(65) || keyIsDown(68) && (!gait.isPlaying())) {
-//     gait.rate(-1);
-//     gait.loop();
-//   }
-// }
-//
-// function keyReleased() {
-//   let gait = random(footsteps);
-//   gait.stop();
-// }
+function keyPressed() {
+  currentState.keyPressed();
+}
