@@ -77,10 +77,10 @@ function setup() {
   let leftWall = new Corridor(-1200, 200, PI / 2);
   curtains.push(leftWall);
 
-  let rightmostWall = new Wall(-1200, 1150, PI / 2);
+  let rightmostWall = new InvertedWall(-1200, 1150, PI / 2);
   curtains.push(rightmostWall);
 
-  let frontWall = new Wall(-1200, -50, PI);
+  let frontWall = new InvertedWall(-1200, -50, PI);
   curtains.push(frontWall);
 
   let backWall = new Wall(-1200, -1200, PI);

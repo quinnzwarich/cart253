@@ -39,14 +39,14 @@ class WalkThroughCorridor extends State {
     this.panning.rolloff(2);
 
     // the documentation also references something called the audio context listener
-    // though I'm not sure how to access it as its methods from the MDN web docs aren't recognized 
+    // though I'm not sure how to access it as its methods from the MDN web docs aren't recognized
   }
 
   walk() {
     randomSeed(this.seed);
     this.gait = random(footsteps)
 
-    if (keyIsDown(87) || keyIsDown(83) || keyIsDown(65) || keyIsDown(68)) {
+    if (keyIsDown(87) || keyIsDown(83)) {
       if (!this.gait.isPlaying()) {
         this.gait.play();
         this.seed++;

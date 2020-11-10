@@ -1,7 +1,7 @@
-class Corridor extends Curtain {
+class InvertedWall extends Curtain {
   constructor(x, z, rotation) {
     super(x, z, rotation);
-    this.polygons = (columns * 83);
+    this.polygons = (columns * 100);
   }
 
   drawCurtain() {
@@ -18,7 +18,7 @@ class Corridor extends Curtain {
 
       push();
       noStroke();
-      fill(this.red, 0, 0);
+      fill(this.invertRed, 0, 0);
       translate(this.x + 30, 0, this.z);
       rotateY(PI / 2);
 
