@@ -10,7 +10,7 @@ Here is a description of this template p5 project.
 let fft;
 let under;
 let index = 0;
-let bins = 128;
+let bins = 32;
 let oscillators = [];
 
 
@@ -46,16 +46,16 @@ function playback() {
 }
 
 function filterbank() {
-  let spectrum = fft.analyze(0, bins);
-  let amplitude = fft.waveform(bins);
-
-  for (let i = 0; i < spectrum.length; i++) {
+  let spectrum = fft.analyze(bins);
+  for (let i = 0; i < bins; i++) {
     let filter = new p5.BandPass();
     let sine = new p5.Oscillator();
-    filter.freq((i + 1) * (22050 / bins));
-    filter.connect(sine);
-    sine.amp(amplitude[i]);
+    sine.start();
+    sine.amp(spectrum[i]);
     sine.freq(spectrum[i]);
+    sine.disconnect();
+    sine.connect(filter);
+    filter.freq((i + 1) * (22050 / bins));
     oscillators.push(sine);
   }
 }
