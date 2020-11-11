@@ -16,7 +16,6 @@ class WalkThroughCorridor extends State {
   }
 
   keyPressed() {
-    console.log(this.distance);
     super.keyPressed();
     if (!under.isPlaying()) {
       under.loop();
@@ -46,10 +45,10 @@ class WalkThroughCorridor extends State {
   }
 
   checkIfOutOfCorridor() {
-    if (this.distance <= 100) {
-      if (!trees.isPlaying()) {
-        trees.play();
-      }
+    // this condition is somewhat lazy
+    // but it is still useful to demonstrate what I generally plan to have happen
+    if (user.position.x >= 650 && user.position.z <= 250) {
+      currentState = new AndIllSeeYou();
     }
   }
 }

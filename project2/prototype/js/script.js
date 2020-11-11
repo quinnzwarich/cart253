@@ -1,10 +1,12 @@
 "use strict";
 
 /**************************************************
-Template p5 project
-Pippin Barr
+prototype with sound
 
-Here is a description of this template p5 project.
+this extension of the prototype is meant to show how a basic
+narrative structure will be outlined with sound. The user will
+walk down the corridor as the loop plays, and when they enter the room,
+the rest of the song will play as it does in the episode.
 **************************************************/
 
 let footsteps = [];
@@ -22,12 +24,17 @@ let trees;
 let ir;
 
 function preload() {
+  // the footstep sounds are taken from here
+  // https://freesound.org/people/Nox_Sound/sounds/490951/
   for (let i = 0; i < footCount; i++) {
     let footstep = loadSound(`assets/sounds/footstep${i + 1}.wav`);
     footsteps.push(footstep);
   }
   under = loadSound(`assets/sounds/Under.mp3`);
   trees = loadSound(`assets/sounds/Trees.mp3`);
+
+  // I used a sample from the dark mood woods theme for an impulse response
+  // I like how it sounds as well as how it ties in another important piece of music from the episode
   ir = createConvolver(`assets/sounds/darkmoodwoodsIR.mp3`);
 }
 
@@ -38,10 +45,10 @@ function setup() {
   under.disconnect();
   ir.process(under);
   ir.process(trees);
-  trees.setVolume(0.66);
 
   currentState = new WalkThroughCorridor();
 
+  // I am using the p5 rovercam library for movement
   user = new User();
   user.setState({
     position: [(width / 18) * 11, 150, (rows * 50) - 100],
@@ -94,9 +101,6 @@ function setup() {
   curtains.push(backWall);
 }
 
-// draw()
-//
-// Description of draw() goes here.
 function draw() {
   currentState.draw();
 }
