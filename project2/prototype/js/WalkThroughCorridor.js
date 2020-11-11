@@ -4,18 +4,19 @@ class WalkThroughCorridor extends State {
     this.distance = 0;
     this.mod = 0;
     this.gait = [];
-    this.seed = 0;
-    this.panning = new p5.Panner3D();
+    this.footstep;
+    this.seed = 1;
   }
 
   draw() {
     super.draw();
     this.modulateAudio();
-    this.positionAudio();
     this.walk();
+    this.checkIfOutOfCorridor();
   }
 
   keyPressed() {
+    console.log(this.distance);
     super.keyPressed();
     if (!under.isPlaying()) {
       under.loop();
@@ -23,38 +24,32 @@ class WalkThroughCorridor extends State {
   }
 
   modulateAudio() {
+    // rate slows as user progresses through the corridor
     this.distance = dist(user.position.x, user.position.z, 700, 100);
     this.mod = map(this.distance, 0, 1000, 0.5, 1);
     this.mod = constrain(this.mod, 0.5, 1);
     under.rate(this.mod);
   }
 
-  positionAudio() {
-    this.panning.process(under);
-    this.panning.set(700, 150, 100);
-
-    // in the documentation, this is actually called rollof
-    // of course it doesn't recognize that as a function
-    // it also doesn't describe any number range which it accepts
-    this.panning.rolloff(2);
-
-    // the documentation also references something called the audio context listener
-    // though I'm not sure how to access it as its methods from the MDN web docs aren't recognized
-  }
-
   walk() {
+    // though the seed is increasing with each loop
+    // it always seems to choose the same footstep
     randomSeed(this.seed);
-    this.gait = random(footsteps)
-
+    this.gait = ceil(random(0, 3));
+    let footstep = footsteps[this.gait];
     if (keyIsDown(87) || keyIsDown(83)) {
-      if (!this.gait.isPlaying()) {
-        this.gait.play();
+      if (!footstep.isPlaying()) {
+        footstep.play();
         this.seed++;
       }
     }
   }
 
   checkIfOutOfCorridor() {
-
+    if (this.distance <= 100) {
+      if (!trees.isPlaying()) {
+        trees.play();
+      }
+    }
   }
 }

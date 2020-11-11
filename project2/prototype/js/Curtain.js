@@ -4,8 +4,6 @@ class Curtain {
     this.z = z;
     this.noiseScale = 0.2;
     this.polygons = undefined;
-    // this.positionsI = [];
-    // this.positionsJ = [];
     this.rotation = rotation;
     this.red = 0;
     this.invertRed = 0;

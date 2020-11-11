@@ -11,7 +11,7 @@ let footsteps = [];
 let tiles = [];
 let curtains = [];
 
-let footCount = 5;
+let footCount = 4;
 let columns = 12;
 let rows = 24;
 
@@ -19,6 +19,7 @@ let currentState;
 let user;
 let under;
 let trees;
+let ir;
 
 function preload() {
   for (let i = 0; i < footCount; i++) {
@@ -27,11 +28,17 @@ function preload() {
   }
   under = loadSound(`assets/sounds/Under.mp3`);
   trees = loadSound(`assets/sounds/Trees.mp3`);
+  ir = createConvolver(`assets/sounds/darkmoodwoodsIR.mp3`);
 }
 
 function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
+
+  under.disconnect();
+  ir.process(under);
+  ir.process(trees);
+  trees.setVolume(0.66);
 
   currentState = new WalkThroughCorridor();
 
