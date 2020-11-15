@@ -22,6 +22,7 @@ let user;
 let under;
 let trees;
 let ir;
+let venus;
 
 function preload() {
   // the footstep sounds are taken from here
@@ -36,6 +37,9 @@ function preload() {
   // I used a sample from the dark mood woods theme for an impulse response
   // I like how it sounds as well as how it ties in another important piece of music from the episode
   ir = createConvolver(`assets/sounds/darkmoodwoodsIR.mp3`);
+
+  // courtesy of the National Gallery of Denmark
+  venus = loadModel(`assets/images/venusreducedpoly.obj`);
 }
 
 function setup() {

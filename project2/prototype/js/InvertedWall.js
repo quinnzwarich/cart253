@@ -26,8 +26,8 @@ class InvertedWall extends Curtain {
       beginShape();
       vertex(-noiseValue * 80, 0, (i * 8) - noiseValue * 80);
       vertex(-nextValue * 80, 0, ((i + 1) * 8) - nextValue * 80);
-      vertex(-nextValue * 80, height, ((i + 1) * 8) - nextValue * 80);
-      vertex(-noiseValue * 80, height, (i * 8) - noiseValue * 80);
+      vertex(-nextValue * 80, height * 2, ((i + 1) * 8) - nextValue * 80);
+      vertex(-noiseValue * 80, height * 2, (i * 8) - noiseValue * 80);
       endShape(CLOSE)
       pop();
     }

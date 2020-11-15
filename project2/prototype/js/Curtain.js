@@ -17,7 +17,7 @@ class Curtain {
   // if vertical, rotate by PI
   display() {
     push();
-    translate(width / 2, -height / 2);
+    translate(width / 2, -height * 1.5);
     rotateY(this.rotation);
     this.drawCurtain();
     pop();

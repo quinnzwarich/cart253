@@ -26,8 +26,8 @@ class Wall extends Curtain {
       beginShape();
       vertex(-noiseValue * 80, 0, (i * 8) - noiseValue * 60);
       vertex(-nextValue * 80, 0, ((i + 1) * 8) - nextValue * 60);
-      vertex(-nextValue * 80, height, ((i + 1) * 8) - nextValue * 60);
-      vertex(-noiseValue * 80, height, (i * 8) - noiseValue * 60);
+      vertex(-nextValue * 80, height * 2, ((i + 1) * 8) - nextValue * 60);
+      vertex(-noiseValue * 80, height * 2, (i * 8) - noiseValue * 60);
       endShape(CLOSE)
       pop();
     }
