@@ -16,17 +16,16 @@ class State {
       curtain.display();
     }
 
-  // draw bust
-  push();
-  directionalLight(127, width, height, 0)
-  noStroke();
-  scale(0.1);
-  translate(5500, 2750, 1000);
-  rotateX(PI);
-  rotateY(PI * 0.875);
-  model(venus);
-  pop();
-
+    // draw bust
+    push();
+    directionalLight(255, 255, 255, -width, height, 0);
+    noStroke();
+    scale(0.1);
+    translate(5500, 2750, 1000);
+    rotateX(PI);
+    rotateY(PI * 0.875);
+    model(venus);
+    pop();
   }
 
   keyPressed() {
