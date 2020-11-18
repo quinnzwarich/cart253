@@ -40,6 +40,7 @@ class WalkThroughCorridor extends State {
     if (keyIsDown(87) || keyIsDown(83)) {
       if (!footstep.isPlaying()) {
         footstep.play();
+        ir.process(footstep);
         this.seed++;
       }
     }

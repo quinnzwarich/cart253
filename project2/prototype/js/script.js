@@ -1,12 +1,11 @@
 "use strict";
 
 /**************************************************
-prototype with sound
+latest iteration
 
-this extension of the prototype is meant to show how a basic
-narrative structure will be outlined with sound. The user will
-walk down the corridor as the loop plays, and when they enter the room,
-the rest of the song will play as it does in the episode.
+I unfortunately haven't gotten the chance to add too much over the course of the week.
+I added a 3D model and also textured the actual scene from the episode
+onto a cube that displays when the user walks into the room.
 **************************************************/
 
 let footsteps = [];
@@ -50,7 +49,7 @@ function setup() {
 
   under.disconnect();
   ir.process(under);
-  ir.process(trees);
+  ir.process(redroom);
 
   currentState = new WalkThroughCorridor();
 

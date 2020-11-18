@@ -4,25 +4,29 @@ class AndIllSeeYou extends State {
     this.gait = [];
     this.footstep;
     this.seed = 1;
+    this.lights = 4;
   }
 
   draw() {
     super.draw();
     this.walk();
-    playVideo();
+    this.trees();
   }
 
   keyPressed() {
+    console.log(user.position);
     super.keyPressed();
   }
 
-  playVideo() {
+  trees() {
     redroom.play();
+    this.strobe = random(0, 255);
 
     blendMode(ADD);
     push();
     noStroke();
-    translate(650, 150, 0);
+    translate(width / 2, -height);
+    translate(600, 400, 550);
     tint(255, 100);
     texture(redroom);
     box(1000);
@@ -38,6 +42,7 @@ class AndIllSeeYou extends State {
     if (keyIsDown(87) || keyIsDown(83)) {
       if (!footstep.isPlaying()) {
         footstep.play();
+        ir.process(footstep);
         this.seed++;
       }
     }
