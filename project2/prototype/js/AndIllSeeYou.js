@@ -9,14 +9,24 @@ class AndIllSeeYou extends State {
   draw() {
     super.draw();
     this.walk();
+    playVideo();
   }
 
   keyPressed() {
     super.keyPressed();
-    if (!trees.isPlaying()) {
-      trees.play();
-      under.setVolume(0);
-    }
+  }
+
+  playVideo() {
+    redroom.play();
+
+    blendMode(ADD);
+    push();
+    noStroke();
+    translate(650, 150, 0);
+    tint(255, 100);
+    texture(redroom);
+    box(1000);
+    pop();
   }
 
   walk() {

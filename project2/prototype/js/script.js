@@ -20,7 +20,7 @@ let rows = 24;
 let currentState;
 let user;
 let under;
-let trees;
+let redroom;
 let ir;
 let venus;
 
@@ -32,7 +32,7 @@ function preload() {
     footsteps.push(footstep);
   }
   under = loadSound(`assets/sounds/Under.mp3`);
-  trees = loadSound(`assets/sounds/Trees.mp3`);
+  redroom = createVideo(`assets/images/redroomwithsound.mp4`);
 
   // I used a sample from the dark mood woods theme for an impulse response
   // I like how it sounds as well as how it ties in another important piece of music from the episode
@@ -45,6 +45,8 @@ function preload() {
 function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
+
+  redroom.hide();
 
   under.disconnect();
   ir.process(under);
