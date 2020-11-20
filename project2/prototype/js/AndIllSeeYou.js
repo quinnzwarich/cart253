@@ -20,7 +20,6 @@ class AndIllSeeYou extends State {
 
   trees() {
     redroom.play();
-    this.strobe = random(0, 255);
 
     blendMode(ADD);
     push();
