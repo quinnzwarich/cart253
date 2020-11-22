@@ -7,6 +7,24 @@ Pippin Barr
 Here is a description of this template p5 project.
 **************************************************/
 
+let request = require(`request`);
+let user_id = `Gdivya`;
+let token = `Bearer AQAeUYuIADVs3O12JoZLUD58ay7QAIedm9TEwHJCViZDivBLq8kAgsUvcAwK_PySE8T75oSRV70u0etHNebesvCphbmxjlEb4HlgE0rpWAQT0hIcyfBfXMmr6bbKB8RSDqA`;
+let playlists_url = `https://api.spotify.com/v1/users/`+user_id+`/playlists`;
+
+request({url:playlist_url, headers:{`authorization`:token}}, function(err, res) {
+  if (res) {
+      let playlists = JSON.parse(res.body);
+      let playlist_url = playlists.items[0].href
+      request({url:playlist_url, headers:{`authorization`:token}}, function(err, res) {
+        if (res) {
+            let playlist = JSON.parse(res.body);
+            // insert stuff here
+      }
+    })
+  }
+})
+
 let candyModel;
 let candies = [];
 let numCandies = 5;
