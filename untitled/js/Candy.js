@@ -12,7 +12,6 @@ class Candy {
     this.b = b;
     this.id = id;
     this.others = others;
-    this.touching = [];
   }
 
   gravity(force) {
@@ -67,6 +66,16 @@ class Candy {
     }
   }
 
+  checkOverlapBackWall() {
+    let hit = this.lineRect(-width/tan(PI*30.0 / 180.0), width/2, width/tan(PI*30.0 / 180.0), width/2,
+                            this.position.x, this.position.z, this.w, this.d);
+    if (hit) {
+      this.velocity.x = -(this.velocity.x * 0.5);
+      this.velocity.z = -(this.velocity.z * 0.5);
+      return true
+    }
+  }
+
   checkOverlapFloor() {
     if (this.position.y + this.h/2 >= height/2) {
       if (!this.checkOverlapLeftWall() || this.checkOverlapRightWall()) {
@@ -92,12 +101,20 @@ class Candy {
         this.velocity.z = this.velocity.z + 1;
         return true;
       }
+      else if (this.checkOverlapBackWall()) {
+        console.log(`bump`);
+        this.position.y = height/2 - this.h/2;
+        this.velocity.x = this.velocity.x - 1;
+        this.velocity.y = -(this.velocity.y * 0.5);
+        this.velocity.z = this.velocity.z + 1;
+        return true;
+      }
     }
     return false;
   }
 
   checkOverlapCandy() {
-    for (let i = this.id; i < numCandies; i++) {
+    for (let i = this.id + 1; i < numCandies; i++) {
       if (this.position.x + this.w/2 > this.others[i].position.x - this.others[i].w/2 &&
           this.position.x - this.w/2 < this.others[i].position.x + this.others[i].w/2 &&
           this.position.y + this.h/2 > this.others[i].position.y - this.others[i].h/2 &&
@@ -105,16 +122,21 @@ class Candy {
           this.position.z + this.d/2 > this.others[i].position.z - this.others[i].d/2 &&
           this.position.z - this.d/2 < this.others[i].position.z + this.others[i].d/2) {
 
+      if (!this.others[i].checkOverlapFloor()) {
+          let dx = this.position.x - this.others[i].position.x;
+          this.velocity.x = this.velocity.x + map(dx, -this.w/2, this.w/2, -1, 1);
+          let dy = this.position.y - this.others[i].position.y;
+          this.velocity.y = this.velocity.y + map(dy, -this.h/2, this.h/2, -1, 1);
+          let dz = this.position.z - this.others[i].position.z;
+          this.velocity.z = this.velocity.z + map(dz, -this.d/2, this.d/2, -1, 1);
+        }
+        else {
           this.position.y = this.others[i].position.y - this.h/2;
-          this.velocity.y = -(this.velocity.y * 0.5);
-
-          // let dx = this.position.x - this.others[i].position.x;
-          // this.velocity.x = this.velocity.x + map(dx, -this.w/2, this.w/2, -0.5, 0.5);
-          // let dz = this.position.z - this.others[i].position.z;
-          // this.velocity.z = this.velocity.z + map(dz, -this.d/2, this.d/2, -0.5, 0.5);
+        }
       }
     }
   }
+
 
   display() {
     push();
@@ -125,5 +147,4 @@ class Candy {
     model(candyModel);
     pop();
   }
-
 }
