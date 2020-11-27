@@ -1,75 +1,121 @@
 "use strict";
 
-/**************************************************
-Template p5 project
-Pippin Barr
+let bear = `            .:+syyyyyyo+:.                                                             .:+syyyyyyo+:.
+                     .+yhhhhhhhhhhhhhhy+.            .-:/+oosyyyhhhhhhhhhyyysoo+/:-.            .+yhhhhhhhhhhhhhhy+.
+                    .shhhhhhhhhhhhhhhhhhhhs.   .:/osyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyso/:.   .shhhhhhhhhhhhhhhhhhhhs.
+                   +hhhhhhhhhhhhhhhhhhhhhhhhoshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhsohhhhhhhhhhhhhhhhhhhhhhhh/
+                 ohhhhhhhhhhyyssyyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyyssyyhhhhhhhhhho
+                +hhhhhhhhhs+//////ohhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhho//////+shhhhhhhhh+
+               .hhhhhhhhy//////oshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhso//////yhhhhhhhh.
+               +hhhhhhhh////+shhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhs+////hhhhhhhh+
+               shhhhhhhs//+yhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhy+//shhhhhhhs
+               shhhhhhhsoyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyoshhhhhhhs
+               +hhhhhhhdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdhhhhhhh+
+                hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+                 :hhhhhhhhhhhhhhhhhhhhdmNMMMMMMNmho/+shhhhhhhhhhhhhhhhhhhhhhhhhhhhhdmNMMMMMMNmho/+shhhhhhhhhhhhhhhhhhhhhh:
+                  /dhhhhhhhhhhhhhhhhmMMMMMMMMMMMMMMNy- /shhhhhhhhhhhhhhhhhhhhhhhhmMMMMMMMMMMMMMMNy- /shhhhhhhhhhhhhhhhhd/
+                 +hhhhhhhhhhhhhhhmMMMMMMMMMMMMMMMMMMMs  -shhhhhhhhhhhhhhhhhhhhmMMMMMMMMMMMMMMMMMMMs  -shhhhhhhhhhhhhhhh+
+                ohhhhhhhhhhhhhhhNMMMMMMMMMMMMMMMMMMMMMd   /hhhhhhhhhhhhhhhhhhNMMMMMMMMMMMMMMMMMMMMMd   +hhhhhhhhhhhhhhhho
+               +hhhhhhhhhhhhhhhmMMMMMMMMMMMMMMMMMMMMMMMy   /hhhhhhhhhhhhhhhhmMMMMMMMMMMMMMMMMMMMMMMMy   /hhhhhhhhhhhhhhhh+
+              :hhhhhhhhhhhhhhhhMMMMMMMMMMMMMMMMMMMMMMMMM    shhhhhhhhhhhhhhhMMMMMMMMMMMMMMMMMMMMMMMMM    shhhhhhhhhhhhhhhh:
+              hhhhhhhhhhhhhhhhhMMMMMMMMMMMMMMMMMMMMMMMMM    :hhhhhhhhhhhhhhhMMMMMMMMMMMMMMMMMMMMMMMMM    :hhhhhhhhhhhhhhhhy
+             ohhhhhhhhhhhhhhhhhNMMMMMMMMMMMMMMMMMMMMMMMm    .hhhhhhhhhhhhhhhNMMMMMMMMMMMMMMMMMMMMMMMm    .hhhhhhhhhhhhhhhhho
+             hhhhhhhhhhhhhhhhhhsMMMMMMMMMMMMMMMMMMMMMMM:    :hhhhhhhhhhhhhhhsMMMMMMMMMMMMMMMMMMMMMMM:    :hhhhhhhhhhhhhhhhhh
+            /hhhhhhhhhhhhhhhhhhs/NMMMMMMMMMMMMMMMMMMMN/     shhhhhhhhhhhhhhhs/NMMMMMMMMMMMMMMMMMMMN/     shhhhhhhhhhhhhhhhhh/
+            shhhhhhhhhhhhhhhhhhh/.yMMMMMMMMMMMMMMMMMy.     /hhhhhhhhhhhhhhhhh/.yMMMMMMMMMMMMMMMMMy.     /hhhhhhhhhhhhhhhhhhhs
+            yhhhhhhhhhhhhhhhhhhhh/ .odMMMMMMMMMMMdo.      /hhhhhhhhhhhhhhhhhhh/ .odMMMMMMMMMMMdo.      /hhhhhhhhhhhhhhhhhhhhy
+            yhhhhhhhhhhhhhhhhhhhhhs-   -/ossso/-        -shhhhhhhhhhhhhhhhhhhhhs-   -/ossso/-        -shhhhhhhhhhhhhhhhhhhhhy
+            yhhhhhhhhhhhhhhhhhhhhhhhs/                /shhhhhhhhhhhhhhhhhhhhhhhhhs/                /shhhhhhhhhhhhhhhhhhhhhhhy
+            shhhhhhhhhhhhhhhhhhhhhhhhhhs+/-.    .-/+shhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhs+/-.    .-/+shhhhhhhhhhhhhhhhhhhhhhhhhhs
+            /hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh/
+             hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+             ohhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhho
+              yhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdddddhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+              :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdNMMMMMMMMMNdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh:
+               +hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhNMMMMMMMMMMMNhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh+
+                ohhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdmNNMMMNNmdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhho
+                 +hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh+
+                  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh:
+                   .shhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhy.
+                     /hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh/
+                      .ohhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhho.
+                        .ohhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhho.
+                          .ohhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhho.
+                             /yhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhy/
+                               .+yhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhy+-
+                                  -+yhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhy+-
+                                      :oyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyo:.
+                                          :+shhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhs+:.
+                                              .-/osyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyso/:.
+                                                     .-:/+oosyyyhhhhhhhhhyyysoo+/:-.                                         `;
+let bearLines = [`            .:+syyyyyyo+:.                                                             .:+syyyyyyo+:.       `,
+                 `         .+yhhhhhhhhhhhhhhy+.            .-:/+oosyyyhhhhhhhhhyyysoo+/:-.            .+yhhhhhhhhhhhhhhy+.    `,
+                 `        .shhhhhhhhhhhhhhhhhhhhs.   .:/osyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyso/:.   .shhhhhhhhhhhhhhhhhhhhs. `,
+                 `       +hhhhhhhhhhhhhhhhhhhhhhhhoshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhsohhhhhhhhhhhhhhhhhhhhhhhh/`,
+                 `      ohhhhhhhhhhyyssyyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhyyssyyhhhhhhhhhho`]
+let bearArray;
+let grotesque;
+let w = 288;
+let h = 72;
 
-Here is a description of this template p5 project.
-**************************************************/
-
-// The map of candy positions with probablity of each spot
-let map = [
-  [0, 0, 0.4, 0, 0],
-  [0, 0.6, 0, 0.8, 0],
-  [0.866, 0, 0.932, 0, 1]
-];
-
-// The resulting map of candies totals at each position
-// Filled out in setup()
-let candies = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
-
-let tileSize = 50;
-
-let numCandies = 31;
+function preload() {
+  grotesque = loadFont(`assets/images/newfontcopy.otf`);
+}
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(288, 144);
+  noLoop();
 
-  // Place each one of the candies desired
-  for (let i = 0; i < numCandies; i++) {
-    // Generate a random number to compare against the probabilities
-    // of the different positions...
-    let r = random();
-    // Remember whether we've placed the current candy in a position yet...
-    let placed = false;
-    // Go through every row
-    for (let row = 0; row < map.length; row++) {
-      // Go through every column in the row
-      for (let col = 0; col < map[row].length; col++) {
-        // Check if the random number is less than the probability of the current
-        // position...
-        if (r < map[row][col]) {
-          // If so, increase the number of candies at that position in the candies array
-          candies[row][col]++;
-          // Remember we found the position for this candy
-          placed = true;
-          // Break out of the for loop (the col loop)
-          break;
-        }
-      }
-      // Check if we placed the current candy...
-      if (placed) {
-        // If so, break out of the fot loop (the row loop) so we can place the next one
-        break;
-      }
-    }
+  textFont(grotesque);
+  textAlign(CENTER);
+  textSize(12);
+
+  bearArray = grotesque.textToPoints(bear, 0, height/4, 12, {
+    sampleFactor: 0.5
+  });
+  console.log(bearArray.length);
+}
+
+function display() {
+  push();
+  beginShape();
+  //translate(-width/2, -height/2);
+  for (let i = 0; i < bearArray.length; i++) {
+    vertex(bearArray[i].x, bearArray[i].y);
+  }
+  endShape();
+  pop()
+
+  text(bear, width/2, 0);
+}
+
+function circleOfCircles(x, y, radius, nPoints) {
+  let angle = TWO_PI / nPoints;
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    vertex(sx, sy);
   }
 }
 
-function draw() {
-  // Draw the number of candies at each position according to the map...
-  background(0);
-  fill(255);
-  textAlign(CENTER, CENTER);
-  textSize(32);
-  translate(100, 100);
-  for (let row = 0; row < candies.length; row++) {
-    for (let col = 0; col < candies[row].length; col++) {
-      text(candies[row][col], col * tileSize, row * tileSize);
+function generate(x, y) {
+  randomSeed(77);
+    for (let i = 0; i < 6; i++) {
+      let rx = random(x -  w / 2, x + w / 2);
+      let ry = random(y - h / 2, y + h / 2);
+      let rPoints = random(10, 16);
+      let cloudSize = random(24, 48);
+      let value = random(250, 255);
+      push();
+      beginShape();
+      noStroke()
+      fill(value);
+      circleOfCircles(rx, ry, cloudSize, rPoints);
+      endShape(CLOSE);
     }
+    pop();
   }
+
+function draw() {
+  generate(width/2 - 10, height/2);
 }
