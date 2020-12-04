@@ -2,32 +2,28 @@ class InvertedWall extends Curtain {
   constructor(x, z, rotation) {
     super(x, z, rotation);
     this.polygons = (columns * 100);
-  }
-
-  returnNoiseValue(i) {
-    return noiseValue = noise(this.x * this.noiseScale, i * this.noiseScale);
+    this.invertedReds = [];
   }
 
   drawCurtain() {
     for (let i = 0; i < this.polygons / 8; i++) {
-    let noiseValue = noise(this.x * this.noiseScale, i * this.noiseScale);
+      let noiseValue = noise(this.x * this.noiseScale, i * this.noiseScale);
+      this.noiseArray.push(noiseValue);
 
-      this.red = noiseValue * 200;
-      this.invertRed = map(this.red, 0, 200, 200, 0);
+      let invertedRed = map(this.noiseArray[i] * 200, 0, 200, 200, 0);
+      this.invertedReds.push(invertedRed);
 
       push();
       noStroke();
-      fill(this.invertRed, 0, 0);
+      fill(this.invertedReds[i], 0, 0);
       translate(this.x + 30, 0, this.z);
       rotateY(PI / 2);
 
-      let nextValue = noise(this.x * this.noiseScale, (i + 1) * this.noiseScale);
-
       beginShape();
-      vertex(-noiseValue * 80, 0, (i * 8) - noiseValue * 80);
-      vertex(-nextValue * 80, 0, ((i + 1) * 8) - nextValue * 80);
-      vertex(-nextValue * 80, height * 2, ((i + 1) * 8) - nextValue * 80);
-      vertex(-noiseValue * 80, height * 2, (i * 8) - noiseValue * 80);
+      vertex(-this.noiseArray[i] * 80, 0, (i * 8) - this.noiseArray[i] * 80);
+      vertex(-this.noiseArray[i + 1] * 80, 0, ((i + 1) * 8) - this.noiseArray[i + 1] * 80);
+      vertex(-this.noiseArray[i + 1] * 80, height * 2, ((i + 1) * 8) - this.noiseArray[i + 1] * 80);
+      vertex(-this.noiseArray[i] * 80, height * 2, (i * 8) - this.noiseArray[i] * 80);
       endShape(CLOSE)
       pop();
     }

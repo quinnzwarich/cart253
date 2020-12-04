@@ -19,7 +19,7 @@ class WalkThroughCorridor extends State {
   }
 
   keyPressed() {
-    console.log(this.distance);
+    console.log(this.playback);
     super.keyPressed();
 
     if (!under.isPlaying()) {

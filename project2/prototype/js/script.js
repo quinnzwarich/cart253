@@ -23,6 +23,7 @@ let corridorScene;
 let redroom;
 let ir;
 let venus;
+//let fr;
 
 function preload() {
   // the footstep sounds are taken from here
@@ -47,6 +48,9 @@ function preload() {
 function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
+  //masterVolume(0);
+
+  //fr = createP(``);
 
   corridorScene.hide();
   redroom.hide();
@@ -102,18 +106,19 @@ function setup() {
   let leftWall = new Corridor(-1200, 200, PI / 2);
   curtains.push(leftWall);
 
-  let rightmostWall = new InvertedWall(-1200, 1150, PI / 2);
-  curtains.push(rightmostWall);
-
   let frontWall = new InvertedWall(-1200, -50, PI);
   curtains.push(frontWall);
 
   let backWall = new Wall(-1200, -1200, PI);
   curtains.push(backWall);
+
+  let rightmostWall = new InvertedWall(-1200, 1150, PI / 2);
+  curtains.push(rightmostWall);
 }
 
 function draw() {
   currentState.draw();
+  //fr.html(floor(frameRate()));
 }
 
 function keyPressed() {

@@ -5,8 +5,7 @@ class Curtain {
     this.noiseScale = 0.2;
     this.polygons = undefined;
     this.rotation = rotation;
-    this.red = 0;
-    this.invertRed = 0;
+    this.noiseArray = [];
   }
 
   drawCurtain() {

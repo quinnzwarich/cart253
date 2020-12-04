@@ -4,7 +4,7 @@ class State {
 
   draw() {
     background(0);
-
+    
     for (let i = 0; i < tiles.length; i++) {
       let tile = tiles[i];
       tile.display();
