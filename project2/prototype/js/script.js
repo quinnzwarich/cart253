@@ -15,6 +15,8 @@ let curtains = [];
 let footCount = 4;
 let columns = 12;
 let rows = 24;
+let polygonsCorridor = 124;
+let polygonsWalls = 150;
 
 let currentState;
 let user;
@@ -50,7 +52,7 @@ function setup() {
   userStartAudio();
   masterVolume(0);
 
-  fr = createP(``);
+  //fr = createP(``);
 
   corridorScene.hide();
   redroom.hide();
@@ -100,27 +102,35 @@ function setup() {
   }
 
   //render curtains
-  let leftmostWall = new Wall(-1200, 0, PI / 2);
-  curtains.push(leftmostWall);
+  for (let i = 0; i < polygonsWalls; i++) {
+    let leftmostWall = new Wall(-1200, 0, PI / 2, i);
+    curtains.push(leftmostWall);
+  }
 
-  for (let i = 0; i < 124; i++) {
-    let leftWall = new Corridor(-1200, 200, PI / 2, i);
+  for (let i = 0; i < polygonsCorridor; i++) {
+    let leftWall = new Wall(-1200, 200, PI / 2, i);
     curtains.push(leftWall);
   }
 
-  // let frontWall = new InvertedWall(-1200, -50, PI);
-  // curtains.push(frontWall);
-  //
-  // let backWall = new Wall(-1200, -1200, PI);
-  // curtains.push(backWall);
-  //
-  // let rightmostWall = new InvertedWall(-1200, 1150, PI / 2);
-  // curtains.push(rightmostWall);
+  for (let i = 0; i < polygonsWalls; i++) {
+    let frontWall = new InvertedWall(-1200, -50, PI, i);
+    curtains.push(frontWall);
+  }
+
+  for (let i = 0; i < polygonsWalls; i++) {
+    let backWall = new Wall(-1200, -1200, PI, i);
+    curtains.push(backWall);
+  }
+
+  for (let i = 0; i < polygonsWalls; i++) {
+    let rightmostWall = new InvertedWall(-1200, 1150, PI / 2, i);
+    curtains.push(rightmostWall);
+  }
 }
 
 function draw() {
   currentState.draw();
-  fr.html(floor(frameRate()));
+  //fr.html(floor(frameRate()));
 }
 
 function keyPressed() {

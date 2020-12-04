@@ -1,11 +1,12 @@
 class Curtain {
-  constructor(x, z, rotation) {
+  constructor(x, z, rotation, i) {
     this.x = x;
     this.z = z;
     this.noiseScale = 0.2;
-    this.polygons = undefined;
     this.rotation = rotation;
+    this.i = i;
     this.noiseArray = [];
+    this.nextArray = [];
   }
 
   drawCurtain() {

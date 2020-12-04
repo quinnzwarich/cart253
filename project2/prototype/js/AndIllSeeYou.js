@@ -14,7 +14,6 @@ class AndIllSeeYou extends State {
   }
 
   keyPressed() {
-    console.log(user.position);
     super.keyPressed();
   }
 
