@@ -19,6 +19,7 @@ let rows = 24;
 let currentState;
 let user;
 let under;
+let corridorScene;
 let redroom;
 let ir;
 let venus;
@@ -30,8 +31,10 @@ function preload() {
     let footstep = loadSound(`assets/sounds/footstep${i + 1}.wav`);
     footsteps.push(footstep);
   }
+
   under = loadSound(`assets/sounds/Under.mp3`);
-  redroom = createVideo(`assets/images/redroomwithsound.mp4`);
+  corridorScene = createVideo(`assets/images/corridor.mp4`);
+  redroom = createVideo(`assets/images/redroom.mp4`);
 
   // I used a sample from the dark mood woods theme for an impulse response
   // I like how it sounds as well as how it ties in another important piece of music from the episode
@@ -45,6 +48,7 @@ function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
 
+  corridorScene.hide();
   redroom.hide();
 
   under.disconnect();
@@ -74,10 +78,12 @@ function setup() {
     // rotate left with A
     if (keyIsDown(65)) {
       this.yaw(-0.05);
+      return;
     }
     // rotate right with D
     if (keyIsDown(68)) {
       this.yaw(0.05);
+      return;
     }
   }
 

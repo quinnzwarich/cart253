@@ -10,7 +10,7 @@ class AndIllSeeYou extends State {
   draw() {
     super.draw();
     this.walk();
-    this.trees();
+    this.displayVideo();
   }
 
   keyPressed() {
@@ -18,17 +18,16 @@ class AndIllSeeYou extends State {
     super.keyPressed();
   }
 
-  trees() {
+  displayVideo() {
     redroom.play();
 
-    blendMode(ADD);
     push();
     noStroke();
-    translate(width / 2, -height);
-    translate(600, 400, 550);
+    translate(user.position.x, user.position.y, user.position.z);
+    rotateY(PI - user.pan);
     tint(255, 100);
     texture(redroom);
-    box(1000);
+    box(width/12, height/12, width/12);
     pop();
   }
 
