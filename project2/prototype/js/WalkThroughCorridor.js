@@ -11,8 +11,8 @@ class WalkThroughCorridor extends State {
 
   draw() {
     super.draw();
-    this.displayVideo();
-    this.modulateVideo();
+    //this.displayVideo();
+    //this.modulateVideo();
     this.modulateAudio();
     this.walk();
     this.checkIfOutOfCorridor();
