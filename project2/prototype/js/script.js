@@ -22,7 +22,7 @@ let currentState;
 let user;
 let under;
 let corridorScene;
-let redroom;
+let redroomScene;
 let ir;
 let venus;
 let fr;
@@ -37,7 +37,7 @@ function preload() {
 
   under = loadSound(`assets/sounds/Under.mp3`);
   corridorScene = createVideo(`assets/images/corridor.mp4`);
-  redroom = createVideo(`assets/images/redroom.mp4`);
+  redroomScene = createVideo(`assets/images/redroom.mp4`);
 
   // I used a sample from the dark mood woods theme for an impulse response
   // I like how it sounds as well as how it ties in another important piece of music from the episode
@@ -50,16 +50,15 @@ function preload() {
 function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
-  masterVolume(0);
 
   //fr = createP(``);
 
   corridorScene.hide();
-  redroom.hide();
+  redroomScene.hide();
+  redroomScene.volume(0);
 
   under.disconnect();
   ir.process(under);
-  ir.process(redroom);
 
   currentState = new WalkThroughCorridor();
 
@@ -67,7 +66,7 @@ function setup() {
   user = new User();
   user.setState({
     position: [(width / 18) * 11, 150, (rows * 50) - 100],
-    rotation: [-PI / 2, 0, 0],
+    rotation: [-PI/2, 0, 0],
     speed: 0.75,
   });
 
@@ -84,12 +83,10 @@ function setup() {
     // rotate left with A
     if (keyIsDown(65)) {
       this.yaw(-0.05);
-      return;
     }
     // rotate right with D
     if (keyIsDown(68)) {
       this.yaw(0.05);
-      return;
     }
   }
 

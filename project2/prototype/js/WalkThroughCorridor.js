@@ -1,12 +1,12 @@
 class WalkThroughCorridor extends State {
   constructor() {
     super();
-    this.distance = 0;
-    this.mod = 0;
-    this.gait = [];
-    this.footstep;
-    this.seed = 1;
-    this.playback = 0;
+    this.roomDistance = 0;
+    this.corridorDistance = 0;
+    this.audioMod = 0;
+    this.videoMod = 0;
+    this.userSize = width/12;
+    this.lastPosition = createVector((width / 18) * 11, 150, (rows * 50) - 100);
   }
 
   draw() {
@@ -20,7 +20,7 @@ class WalkThroughCorridor extends State {
 
   keyPressed() {
     super.keyPressed();
-
+    console.log(this.stepSize);
     if (!under.isPlaying()) {
       under.loop();
     }
@@ -28,17 +28,19 @@ class WalkThroughCorridor extends State {
 
   modulateVideo() {
     if (corridorScene.duration() > 0) {
-      this.playback = map(this.distance, 1011, 0, 0, corridorScene.duration());
-      corridorScene.time(this.playback);
+      this.corridorDistance = dist(user.position.x, user.position.z, 550, 100);
+      this.videoMod = map(this.corridorDistance, 1000, 0, 0, corridorScene.duration());
+      this.videoMod = constrain(this.videoMod, 0, corridorScene.duration());
+      corridorScene.time(this.videoMod);
     }
   }
 
   modulateAudio() {
-    // rate slows as user progresses through the corridor
-    this.distance = dist(user.position.x, user.position.z, 700, 100);
-    this.mod = map(this.distance, 0, 1011, 0.5, 1);
-    this.mod = constrain(this.mod, 0.5, 1);
-    under.rate(this.mod);
+    // rate slows corresponding to position within room
+    this.roomDistance = dist(user.position.x, user.position.z, 1050, 600);
+    this.audioMod = map(this.roomDistance, 0, 848.5, 0.5, 1);
+    this.audioMod = constrain(this.audioMod, 0.5, 1);
+    under.rate(this.audioMod);
   }
 
   displayVideo() {
@@ -52,21 +54,6 @@ class WalkThroughCorridor extends State {
     texture(corridorScene);
     box(width/12, height/12, width/12);
     pop();
-  }
-
-  walk() {
-    // though the seed is increasing with each loop
-    // it always seems to choose the same footstep
-    randomSeed(this.seed);
-    this.gait = ceil(random(0, 3));
-    let footstep = footsteps[this.gait];
-    if (keyIsDown(87) || keyIsDown(83)) {
-      if (!footstep.isPlaying()) {
-        footstep.play();
-        ir.process(footstep);
-        this.seed++;
-      }
-    }
   }
 
   checkIfOutOfCorridor() {

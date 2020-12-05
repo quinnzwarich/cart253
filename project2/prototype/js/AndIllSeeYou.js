@@ -5,6 +5,7 @@ class AndIllSeeYou extends State {
     this.footstep;
     this.seed = 1;
     this.lights = 4;
+    this.transparency = 0;
   }
 
   draw() {
@@ -15,33 +16,26 @@ class AndIllSeeYou extends State {
 
   keyPressed() {
     super.keyPressed();
+
+    if (!under.isPlaying()) {
+      under.loop();
+    }
+  }
+
+  strobe() {
+    this.transparency
   }
 
   displayVideo() {
-    redroom.play();
+    redroomScene.play();
 
     push();
     noStroke();
     translate(user.position.x, user.position.y, user.position.z);
     rotateY(PI - user.pan);
     tint(255, 100);
-    texture(redroom);
-    box(width/12, height/12, width/12);
+    texture(redroomScene);
+    box(this.userSize, height/12, this.userSize);
     pop();
-  }
-
-  walk() {
-    // though the seed is increasing with each loop
-    // it always seems to choose the same footstep
-    randomSeed(this.seed);
-    this.gait = ceil(random(0, 3));
-    let footstep = footsteps[this.gait];
-    if (keyIsDown(87) || keyIsDown(83)) {
-      if (!footstep.isPlaying()) {
-        footstep.play();
-        ir.process(footstep);
-        this.seed++;
-      }
-    }
   }
 }
