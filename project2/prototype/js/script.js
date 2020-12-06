@@ -15,8 +15,7 @@ let curtains = [];
 let footCount = 4;
 let columns = 12;
 let rows = 24;
-let polygonsCorridor = 124;
-let polygonsWalls = 150;
+let polygons = 150;
 
 let currentState;
 let user;
@@ -67,7 +66,7 @@ function setup() {
   user.setState({
     position: [(width / 18) * 11, 150, (rows * 50) - 100],
     rotation: [-PI/2, 0, 0],
-    speed: 0.75,
+    speed: 0.5,
   });
 
   // override controls to prevent user from moving up or down
@@ -99,27 +98,27 @@ function setup() {
   }
 
   //render curtains
-  for (let i = 0; i < polygonsWalls; i++) {
+  for (let i = 0; i < polygons; i++) {
     let leftmostWall = new Wall(-1200, 0, PI / 2, i);
     curtains.push(leftmostWall);
   }
 
-  for (let i = 0; i < polygonsCorridor; i++) {
+  for (let i = 0; i < polygons; i++) {
     let leftWall = new Wall(-1200, 200, PI / 2, i);
     curtains.push(leftWall);
   }
 
-  for (let i = 0; i < polygonsWalls; i++) {
+  for (let i = 0; i < polygons; i++) {
     let frontWall = new InvertedWall(-1200, -50, PI, i);
     curtains.push(frontWall);
   }
 
-  for (let i = 0; i < polygonsWalls; i++) {
+  for (let i = 0; i < polygons; i++) {
     let backWall = new Wall(-1200, -1200, PI, i);
     curtains.push(backWall);
   }
 
-  for (let i = 0; i < polygonsWalls; i++) {
+  for (let i = 0; i < polygons; i++) {
     let rightmostWall = new InvertedWall(-1200, 1150, PI / 2, i);
     curtains.push(rightmostWall);
   }
