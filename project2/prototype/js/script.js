@@ -11,15 +11,21 @@ onto a cube that displays when the user walks into the room.
 let footsteps = [];
 let tiles = [];
 let curtains = [];
+let coordinatesI = [];
+let coordinatesJ = [];
 let sycamores = [];
 
 let footCount = 4;
+let numTrees = 16;
+let polygons = 150;
 let columns = 12;
 let rows = 24;
-let polygons = 150;
+let imageColumns = 128;
+let imageRows = 128;
 
 let currentState;
 let user;
+let laura;
 let gothic;
 let under;
 let corridorScene;
@@ -27,8 +33,6 @@ let redroomScene;
 let ir;
 let venus;
 let fr;
-
-let textArray;
 
 function preload() {
   // the footstep sounds are taken from here
@@ -38,10 +42,9 @@ function preload() {
     footsteps.push(footstep);
   }
 
+  laura = loadImage(`assets/images/editedlaura.png`);
   gothic = loadFont(`assets/images/National-Gothic.otf`);
-
   under = loadSound(`assets/sounds/Under.mp3`);
-
   corridorScene = createVideo(`assets/images/corridor.mp4`);
   redroomScene = createVideo(`assets/images/redroom.mp4`);
 
@@ -55,8 +58,9 @@ function preload() {
 
 function setup() {
   createCanvas(900, 600, WEBGL);
-  userStartAudio();
+  pixelDensity(1);
   textFont(gothic);
+  userStartAudio();
 
   //fr = createP(``);
 
@@ -97,6 +101,36 @@ function setup() {
     }
   }
 
+  // gather data from image of laura for sycamore coordinates
+  laura.loadPixels();
+  for (let i = 0; i < imageColumns; i++) {
+    for (let j = 0; j < imageRows; j++) {
+      let index = (i + j * imageRows) * 4;
+      let r = laura.pixels[index + 0];
+      let g = laura.pixels[index + 1];
+      let b = laura.pixels[index + 2];
+      let bright = (r + g + b) / 3;
+      if (bright < 10) {
+        coordinatesI.push(i);
+        coordinatesJ.push(j);
+      }
+    }
+  }
+
+  // render sycamores
+  // for (let i = 0; i < numTrees; i++) {
+  //   let sycamore = new Sycamore(i * 32, 0, 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175,
+  //       random(coordinatesI), random(coordinatesJ), 175, i);
+  //       sycamores.push(sycamore);
+  // }
+
   // render floor
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
@@ -104,10 +138,6 @@ function setup() {
       tiles.push(tile);
     }
   }
-
-  // render sycamores
-  let sycamore = new Sycamore(575, 300, 175, 0);
-  sycamores.push(sycamore);
 
   //render curtains
   for (let i = 0; i < polygons; i++) {

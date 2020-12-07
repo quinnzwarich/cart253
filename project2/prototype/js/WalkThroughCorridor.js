@@ -67,10 +67,19 @@ class WalkThroughCorridor extends State {
   }
 
   drawSycamores() {
-    for (let i = 0; i < sycamores.length; i++) {
-      let sycamore = sycamores[i];
-      sycamore.display();
-    }
+    // for (let i = 0; i < sycamores.length; i++) {
+    //   let sycamore = sycamores[i];
+    //   sycamore.display();
+    // }
+    // for(let i = 0; i < coordinatesI.length; i++) {
+    //   for(let j = 0; j < coordinatesJ.length; j++) {
+    //     push();
+    //     stroke(255);
+    //     strokeWeight(5);
+    //     point(coordinatesI[i], coordinatesJ[j]);
+    //     pop();
+    //   }
+    // }
   }
 
   displayVideo() {
