@@ -11,6 +11,7 @@ onto a cube that displays when the user walks into the room.
 let footsteps = [];
 let tiles = [];
 let curtains = [];
+let sycamores = [];
 
 let footCount = 4;
 let columns = 12;
@@ -19,12 +20,15 @@ let polygons = 150;
 
 let currentState;
 let user;
+let gothic;
 let under;
 let corridorScene;
 let redroomScene;
 let ir;
 let venus;
 let fr;
+
+let textArray;
 
 function preload() {
   // the footstep sounds are taken from here
@@ -34,7 +38,10 @@ function preload() {
     footsteps.push(footstep);
   }
 
+  gothic = loadFont(`assets/images/National-Gothic.otf`);
+
   under = loadSound(`assets/sounds/Under.mp3`);
+
   corridorScene = createVideo(`assets/images/corridor.mp4`);
   redroomScene = createVideo(`assets/images/redroom.mp4`);
 
@@ -49,6 +56,7 @@ function preload() {
 function setup() {
   createCanvas(900, 600, WEBGL);
   userStartAudio();
+  textFont(gothic);
 
   //fr = createP(``);
 
@@ -96,6 +104,10 @@ function setup() {
       tiles.push(tile);
     }
   }
+
+  // render sycamores
+  let sycamore = new Sycamore(575, 300, 175, 0);
+  sycamores.push(sycamore);
 
   //render curtains
   for (let i = 0; i < polygons; i++) {

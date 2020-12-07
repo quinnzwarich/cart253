@@ -33,7 +33,7 @@ class AndIllSeeYou extends State {
 
   draw() {
     super.draw();
-    this.displayVideo();
+    
   }
 
   drawCurtains() {

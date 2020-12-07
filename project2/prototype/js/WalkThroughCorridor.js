@@ -33,6 +33,7 @@ class WalkThroughCorridor extends State {
     super.draw(255);
     this.modulateVideo();
     this.checkIfOutOfCorridor();
+    this.drawSycamores();
   }
 
   drawCurtains() {
@@ -65,16 +66,23 @@ class WalkThroughCorridor extends State {
     pop();
   }
 
+  drawSycamores() {
+    for (let i = 0; i < sycamores.length; i++) {
+      let sycamore = sycamores[i];
+      sycamore.display();
+    }
+  }
+
   displayVideo() {
-    blendMode(ADD);
-    push();
-    noStroke();
-    translate(user.position.x, user.position.y, user.position.z);
-    rotateY(PI - user.pan);
-    tint(255, 100);
-    texture(corridorScene);
-    box(width/12, height/12, width/12);
-    pop();
+    // blendMode(ADD);
+    // push();
+    // noStroke();
+    // translate(user.position.x, user.position.y, user.position.z);
+    // rotateY(PI - user.pan);
+    // tint(255, 100);
+    // texture(corridorScene);
+    // box(width/12, height/12, width/12);
+    // pop();
   }
 
   modulateVideo() {
