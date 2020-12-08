@@ -11,17 +11,17 @@ onto a cube that displays when the user walks into the room.
 let footsteps = [];
 let tiles = [];
 let curtains = [];
-let coordinatesI = [];
-let coordinatesJ = [];
+let coordinates = [];
+let noiseValues = [];
 let sycamores = [];
 
 let footCount = 4;
-let numTrees = 16;
+let numTrees = 1;
 let polygons = 150;
 let columns = 12;
 let rows = 24;
-let imageColumns = 128;
-let imageRows = 128;
+let imageColumns = 512;
+let imageRows = 512;
 
 let currentState;
 let user;
@@ -103,33 +103,42 @@ function setup() {
 
   // gather data from image of laura for sycamore coordinates
   laura.loadPixels();
-  for (let i = 0; i < imageColumns; i++) {
-    for (let j = 0; j < imageRows; j++) {
-      let index = (i + j * imageRows) * 4;
+    for (let j = 0; j < imageRows; j+= 4) {
+      for (let i = 0; i < imageColumns; i+= 4) {
+      let index = ((j * imageRows) + i) * 4;
       let r = laura.pixels[index + 0];
       let g = laura.pixels[index + 1];
       let b = laura.pixels[index + 2];
+      let a = laura.pixels[index + 3];
       let bright = (r + g + b) / 3;
-      if (bright < 10) {
-        coordinatesI.push(i);
-        coordinatesJ.push(j);
+      let brightAlpha = (r + g + b + a) / 4;
+      if (bright < 1 && !brightAlpha < 1) {
+        coordinates.push({ x: i, y: j});
       }
     }
   }
+  console.log(coordinates);
 
   // render sycamores
-  // for (let i = 0; i < numTrees; i++) {
-  //   let sycamore = new Sycamore(i * 32, 0, 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175,
-  //       random(coordinatesI), random(coordinatesJ), 175, i);
-  //       sycamores.push(sycamore);
-  // }
+  for (let i = 0; i < numTrees; i++) {
+    // for (let j = 0; j < 8; j++) {
+    //   let noiseValue = floor(map(noise(i * 0.2, j * 0.2), 0, 1, 0, 3116));
+    //   noiseValues.push(noiseValue);
+    // }
+    let r1 = floor(random(2078, 3116));
+    let r2 = floor(random(1040, 2078));
+    let r3 = floor(random(0, 1040));
+    let sycamore = new Sycamore(coordinates[3116].x, coordinates[3116].y, 0,
+    coordinates[r1].x, coordinates[r1].y, 0,
+    coordinates[r2].x, coordinates[r2].y, 0,
+    coordinates[r3].x, coordinates[r3].y, 0,
+    coordinates[r1].x, coordinates[r1].y, 0,
+    coordinates[r1].x, coordinates[r1].y, 0,
+    coordinates[r2].x, coordinates[r2].y, 0,
+    coordinates[r2].x, coordinates[r2].y, 0,
+    coordinates[r3].x, coordinates[r3].y, 0, i);
+    sycamores.push(sycamore);
+  }
 
   // render floor
   for (let i = 0; i < columns; i++) {

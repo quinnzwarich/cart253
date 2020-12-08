@@ -22,8 +22,10 @@ class Sycamore {
 
   trunk() {
     push();
-    stroke(225);
+    stroke(225, 0, 0);
+    strokeWeight(5);
     line(this.origin.x, this.origin.y, this.origin.z, this.trunk1.x, this.trunk1.y, this.trunk1.z);
+    stroke(255);
     line(this.trunk1.x, this.trunk1.y, this.trunk1.z, this.trunk2.x, this.trunk2.y, this.trunk2.z);
     line(this.trunk2.x, this.trunk2.y, this.trunk2.z, this.trunk3.x, this.trunk3.y, this.trunk3.z);
     pop();
@@ -32,12 +34,13 @@ class Sycamore {
   bottomBranches() {
     randomSeed(this.i);
     let branch1 = p5.Vector.sub(this.trunk1, this.origin);
-        branch1.mult(random(0, 1));
+        branch1.mult(random(0, 0.5));
     let branch2 = p5.Vector.sub(this.trunk1, this.origin);
-        branch2.mult(random(0, 1));
+        branch2.mult(random(0, 0.5));
 
     push();
-    stroke(255);
+    stroke(0, 225, 0);
+    strokeWeight(5);
     translate(this.origin);
     line(branch1.x, branch1.y, branch1.z, this.branch1.x, this.branch1.y, this.branch1.z);
     line(branch2.x, branch2.y, branch2.z, this.branch2.x, this.branch2.y, this.branch2.z);
@@ -47,12 +50,13 @@ class Sycamore {
   middleBranches() {
     randomSeed(this.i);
     let branch3 = p5.Vector.sub(this.trunk2, this.trunk1);
-        branch3.mult(random(0, 1));
+        branch3.mult(random(0, 0.5));
     let branch4 = p5.Vector.sub(this.trunk2, this.trunk1);
-        branch4.mult(random(0, 1));
+        branch4.mult(random(0, 0.5));
 
     push();
-    stroke(255);
+    stroke(0, 0, 225);
+    strokeWeight(5);
     translate(this.trunk1);
     line(branch3.x, branch3.y, branch3.z, this.branch3.x, this.branch3.y, this.branch3.z);
     line(branch4.x, branch4.y, branch4.z, this.branch4.x, this.branch4.y, this.branch4.z);
@@ -62,10 +66,10 @@ class Sycamore {
   topBranch() {
     randomSeed(this.i);
     let branch5 = p5.Vector.sub(this.trunk3, this.trunk2);
-        branch5.mult(random(0, 1));
+        branch5.mult(random(0, 0.5));
 
     push();
-    stroke(255);
+    stroke(255, 255, 0);
     translate(this.trunk2);
     line(branch5.x, branch5.y, branch5.z, this.branch5.x, this.branch5.y, this.branch5.z);
     pop();
@@ -74,7 +78,7 @@ class Sycamore {
   display() {
     this.trunk();
     this.bottomBranches();
-    this.middleBranches();
-    this.topBranch();
+    //this.middleBranches();
+    //this.topBranch();
   }
 }

@@ -37,20 +37,20 @@ class WalkThroughCorridor extends State {
   }
 
   drawCurtains() {
-    for (let i = 0; i < curtains.length; i++) {
-      if (i < 300) {
-        let curtain = curtains[i];
-        curtain.display();
-      }
-      if (i > 415 && i < 450) {
-        let curtain = curtains[i];
-        curtain.display();
-      }
-      if (i > 565 && i < 600) {
-        let curtain = curtains[i];
-        curtain.display();
-      }
-    }
+    // for (let i = 0; i < curtains.length; i++) {
+    //   if (i < 300) {
+    //     let curtain = curtains[i];
+    //     curtain.display();
+    //   }
+    //   if (i > 415 && i < 450) {
+    //     let curtain = curtains[i];
+    //     curtain.display();
+    //   }
+    //   if (i > 565 && i < 600) {
+    //     let curtain = curtains[i];
+    //     curtain.display();
+    //   }
+    // }
   }
 
   drawFurniture() {
@@ -67,19 +67,21 @@ class WalkThroughCorridor extends State {
   }
 
   drawSycamores() {
-    // for (let i = 0; i < sycamores.length; i++) {
-    //   let sycamore = sycamores[i];
-    //   sycamore.display();
-    // }
-    // for(let i = 0; i < coordinatesI.length; i++) {
-    //   for(let j = 0; j < coordinatesJ.length; j++) {
-    //     push();
-    //     stroke(255);
-    //     strokeWeight(5);
-    //     point(coordinatesI[i], coordinatesJ[j]);
-    //     pop();
-    //   }
-    // }
+    for (let i = 0; i < sycamores.length; i++) {
+      let sycamore = sycamores[i];
+      push();
+      translate(450, -256, 300);
+      sycamore.display();
+      pop();
+    }
+    for(let i = 0; i < coordinates.length; i++) {
+      push();
+      stroke(255);
+      strokeWeight(0.25);
+      translate(450, -256, 300);
+      point(coordinates[i].x, coordinates[i].y);
+      pop();
+    }
   }
 
   displayVideo() {
