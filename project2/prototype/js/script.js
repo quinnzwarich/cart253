@@ -39,10 +39,10 @@ let fr;
 function preload() {
   // the footstep sounds are taken from here
   // https://freesound.org/people/Nox_Sound/sounds/490951/
-  for (let i = 0; i < footCount; i++) {
-    let footstep = loadSound(`assets/sounds/grassyFootstep${i + 1}.mp3`);
-    grassyFootsteps.push(footstep);
-  }
+  // for (let i = 0; i < footCount; i++) {
+  //   let footstep = loadSound(`assets/sounds/grassyFootstep${i + 1}.mp3`);
+  //   grassyFootsteps.push(footstep);
+  // }
   for (let i = 0; i < footCount; i++) {
     let footstep = loadSound(`assets/sounds/footstep${i + 1}.wav`);
     footsteps.push(footstep);

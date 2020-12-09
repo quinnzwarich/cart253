@@ -23,7 +23,7 @@ class Glastonbury extends State {
       this.wait.push(previous);
     }
     if (this.wait.length >= this.stepSize) {
-      let gait = random(grassyFootsteps);
+      let gait = random(footsteps);
       gait.play();
       ir.process(gait);
       this.wait.splice(0, this.wait.length - 1);
