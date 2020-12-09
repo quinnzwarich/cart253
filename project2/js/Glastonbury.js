@@ -66,7 +66,8 @@ class Glastonbury extends State {
     }
   }
 
-  // decided not to use the grass footsteps as they cause a strange flashing bug
+  // decided not to use the grass footsteps as they were causing many bugs
+  // I've left the function in as a reminder of what could have been 
   // c'est la vie
   walk() {
     if (keyIsDown(87) || keyIsDown(83)) {

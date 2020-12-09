@@ -8,6 +8,7 @@ meet your destiny in the black lodge.
 **************************************************/
 
 let footsteps = [];
+let grassyFootsteps = [];
 let tiles = [];
 let curtains = [];
 let coordinates = [];
