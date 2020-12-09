@@ -8,6 +8,7 @@ I added a 3D model and also textured the actual scene from the episode
 onto a cube that displays when the user walks into the room.
 **************************************************/
 
+let grassyFootsteps = [];
 let footsteps = [];
 let tiles = [];
 let curtains = [];
@@ -16,7 +17,7 @@ let noiseValues = [];
 let sycamores = [];
 
 let footCount = 4;
-let numTrees = 1;
+let numTrees = 2;
 let polygons = 150;
 let columns = 12;
 let rows = 24;
@@ -25,6 +26,7 @@ let imageRows = 512;
 
 let currentState;
 let user;
+let terrain;
 let laura;
 let gothic;
 let under;
@@ -37,6 +39,10 @@ let fr;
 function preload() {
   // the footstep sounds are taken from here
   // https://freesound.org/people/Nox_Sound/sounds/490951/
+  for (let i = 0; i < footCount; i++) {
+    let footstep = loadSound(`assets/sounds/grassyFootstep${i + 1}.mp3`);
+    grassyFootsteps.push(footstep);
+  }
   for (let i = 0; i < footCount; i++) {
     let footstep = loadSound(`assets/sounds/footstep${i + 1}.wav`);
     footsteps.push(footstep);
@@ -76,8 +82,8 @@ function setup() {
   // I am using the p5 rovercam library for movement
   user = new User();
   user.setState({
-    position: [(width / 18) * 11, 150, (rows * 50) - 100],
-    rotation: [-PI/2, 0, 0],
+    position: [843, 150, 1931],
+    rotation: [-1.42, 0, 0],
     speed: 0.5,
   });
 
@@ -101,6 +107,9 @@ function setup() {
     }
   }
 
+  // render portal
+  terrain = new Terrain(40 + 206.25, 525 + 150, -30);
+
   // gather data from image of laura for sycamore coordinates
   laura.loadPixels();
     for (let j = 0; j < imageRows; j+= 4) {
@@ -113,30 +122,31 @@ function setup() {
       let bright = (r + g + b) / 3;
       let brightAlpha = (r + g + b + a) / 4;
       if (bright < 1 && !brightAlpha < 1) {
-        coordinates.push({ x: i, y: j});
+        coordinates.push({x: i, y: j});
       }
     }
   }
-  console.log(coordinates);
 
   // render sycamores
   for (let i = 0; i < numTrees; i++) {
-    // for (let j = 0; j < 8; j++) {
-    //   let noiseValue = floor(map(noise(i * 0.2, j * 0.2), 0, 1, 0, 3116));
-    //   noiseValues.push(noiseValue);
-    // }
-    let r1 = floor(random(2078, 3116));
-    let r2 = floor(random(1040, 2078));
-    let r3 = floor(random(0, 1040));
-    let sycamore = new Sycamore(coordinates[3116].x, coordinates[3116].y, 0,
-    coordinates[r1].x, coordinates[r1].y, 0,
-    coordinates[r2].x, coordinates[r2].y, 0,
-    coordinates[r3].x, coordinates[r3].y, 0,
-    coordinates[r1].x, coordinates[r1].y, 0,
-    coordinates[r1].x, coordinates[r1].y, 0,
-    coordinates[r2].x, coordinates[r2].y, 0,
-    coordinates[r2].x, coordinates[r2].y, 0,
-    coordinates[r3].x, coordinates[r3].y, 0, i);
+    let o = floor(random(3110, 3116));
+    let r1 = floor(random(1558, 3116));
+    let r2 = floor(random(558, 1558));
+    let r3 = floor(random(0, 558));
+    let r4 = floor(random(1558, 3116));
+    let r5 = floor(random(1558, 3116));
+    let r6 = floor(random(558, 1558));
+    let r7 = floor(random(558, 1558));
+    let r8 = floor(random(0, 558));
+    let sycamore = new Sycamore(coordinates[o].x, coordinates[o].y, 0,
+    coordinates[r1].x, coordinates[r1].y, random(-64, 64),
+    coordinates[r2].x, coordinates[r2].y, random(-64, 64),
+    coordinates[r3].x, coordinates[r3].y, random(-64, 64),
+    coordinates[r4].x, coordinates[r4].y, random(-128, 128),
+    coordinates[r5].x, coordinates[r5].y, random(-128, 128),
+    coordinates[r6].x, coordinates[r6].y, random(-128, 128),
+    coordinates[r7].x, coordinates[r7].y, random(-128, 128),
+    coordinates[r8].x, coordinates[r8].y, random(-128, 128), i);
     sycamores.push(sycamore);
   }
 
@@ -173,6 +183,8 @@ function setup() {
     let rightmostWall = new InvertedWall(-1200, 1150, PI / 2, i);
     curtains.push(rightmostWall);
   }
+
+  currentState = new Glastonbury;
 }
 
 function draw() {

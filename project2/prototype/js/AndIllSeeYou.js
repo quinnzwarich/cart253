@@ -1,4 +1,4 @@
-class AndIllSeeYou extends State {
+class AndIllSeeYou extends Lodge {
   constructor() {
     super();
     this.total = 0;
@@ -33,7 +33,7 @@ class AndIllSeeYou extends State {
 
   draw() {
     super.draw();
-    
+
   }
 
   drawCurtains() {

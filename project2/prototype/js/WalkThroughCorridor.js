@@ -1,4 +1,4 @@
-class WalkThroughCorridor extends State {
+class WalkThroughCorridor extends Lodge {
   constructor() {
     super();
     this.corridorDistance = 0;
@@ -70,18 +70,18 @@ class WalkThroughCorridor extends State {
     for (let i = 0; i < sycamores.length; i++) {
       let sycamore = sycamores[i];
       push();
-      translate(450, -256, 300);
+      translate(450, -212, 300);
       sycamore.display();
       pop();
     }
-    for(let i = 0; i < coordinates.length; i++) {
-      push();
-      stroke(255);
-      strokeWeight(0.25);
-      translate(450, -256, 300);
-      point(coordinates[i].x, coordinates[i].y);
-      pop();
-    }
+    // for(let i = 0; i < coordinates.length; i++) {
+    //   push();
+    //   stroke(255);
+    //   strokeWeight(0.25);
+    //   translate(450, -256, 300);
+    //   point(coordinates[i].x, coordinates[i].y);
+    //   pop();
+    // }
   }
 
   displayVideo() {
