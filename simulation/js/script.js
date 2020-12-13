@@ -19,11 +19,31 @@ let note4;
 let note5;
 let currentState;
 
-let columns = 0;
-let rows = 0;
-let scale = 50;
-
 let flowers = [];
+let grid = [
+  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0],
+  [0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0],
+  [0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+  [0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0],
+  [0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0],
+  [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+  [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+  [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+  [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+  [0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0],
+  [0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0],
+  [0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+];
+let rows = 13;
+let columns = 13;
+let scale = 32;
 
 function preload() {
   font = loadFont("assets/fonts/england.ttf");
@@ -34,35 +54,37 @@ function preload() {
   note5 = loadSound(`assets/sounds/E4.wav`);
 }
 
-// try changing the flower args back to arrays
 function setup() {
   createCanvas(1000, 1000, WEBGL);
-  columns = width / scale;
-  rows = height / scale;
 
   let xOffset = 0;
   let yOffset = 0;
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < columns; j++) {
+  for (let j = 0; j < grid.length; j++) {
+    let row = grid[j];
+    for (let i = 0; i < row.length; i++) {
+      let position = row[i];
       let noiseValue = noise(xOffset, yOffset);
-      if (noiseValue > 0.5) {
-        let flowerColourR = map(noiseValue, 0, 1, 0, 255);
-        let flowerColourG = map(noiseValue, 0, 1, 0, 255);
-        let flowerColourB = map(noiseValue, 0, 1, 0, 255);
-        let flowerAngle = map(noiseValue, 0, 1, PI, 2 * PI);
-        let flower = new Flower((x * scale)/2, 0, (y * scale)/2,
-        flowerColourR, flowerColourG, flowerColourB,
-        0, flowerAngle);
-        flowers.push(flower)
+      if (position === 1) {
+        console.log(`true`);
+        if (noiseValue > 0.375) {
+          let r = map(noise(xOffset), 0, 1, 127, 255);
+          let g = map(noise(yOffset), 0, 1, 127, 255);
+          let b = map(noise(xOffset, yOffset), 0, 1, 127, 255);
+          let angle = map(noiseValue, 0, 1, PI, 2 * PI);
+          let flower = new Flower((i * scale)/2, (j * scale)/2, 0,
+          r, g, b, 0, angle);
+          flowers.push(flower);
+        }
       }
-      yOffset = yOffset + 1.75;
+      xOffset = xOffset + 0.3;
     }
-    xOffset = xOffset + 1.75;
+    yOffset = yOffset + 0.3;
   }
 
   currentState = new Title;
 }
 
 function draw() {
+  orbitControl();
   currentState.draw();
 }

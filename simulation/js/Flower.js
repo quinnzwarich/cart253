@@ -43,16 +43,15 @@ class  Flower {
   drawFlower() {
     push();
     translate(250, 650, 250);
-    translate(this.arguments.x, this.arguments.y, this.arguments.z);
+    translate(this.arguments.position.x, this.arguments.position.y, this.arguments.position.z);
     rotateX(-PI / 2);
-    strokeWeight(0.5);
-    stroke(211, 255, 204);
-    drawStem();
-    fill(this.arguments.red, this.arguments.green, this.arguments.blue);
+    strokeWeight(0.33);
     stroke(this.arguments.red, this.arguments.green, this.arguments.blue);
+    this.drawStem();
+    fill(this.arguments.red, this.arguments.green, this.arguments.blue);
     rotateX(PI);
     rotateY(2 * PI);
-    drawPetals();
+    this.drawPetals();
     pop();
   }
 
@@ -61,7 +60,7 @@ class  Flower {
   }
 
   levitate() {
-    if (movement) {
+    if (this.movement) {
       this.velocity.add(this.acceleration);
       this.position.add(this.velocity);
     }

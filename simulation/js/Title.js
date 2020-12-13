@@ -9,7 +9,7 @@ class Title extends State {
 
   text() {
     push();
-    fill(255);
+    fill(0, 127, 255);
     translate(0, -275, 250);
     textFont(font);
     textSize(70);

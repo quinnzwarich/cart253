@@ -1,10 +1,10 @@
 class State {
   constructor() {
-
+    this.gravity = createVector(0, -1, 0);
   }
 
   draw() {
-    background(0, 127, 255);
+    background(255);
     this.display();
     this.text();
   }
@@ -14,32 +14,29 @@ class State {
   }
 
   drawGrass() {
-    translate(-width / 2, -height / 2);
+    translate(-width / 4, -height / 4);
     push();
     translate(0, 0, 150);
     noStroke();
     fill(186, 230, 179);
-    rect(-width / 4, height / 6, width * 2, height);
+    rect(-width / 4, height / 6, width, height);
     pop();
   }
 
   drawFlowers() {
-    translate(-width / 2, -height / 2);
-    for (let x = 0; x < columns; x++) {
-      for (let y = 0; y < rows - 1; y++) {
-        // let force = createVector(0, -1, 0);
-        let flower = flowers[x][y];
-        // flower.gravity(force);
-        flower.levitate();
-        flower.drawFlower();
-      }
+    translate(-width/2.55, -height/3);
+    for (let i = 0; i < flowers.length; i++) {
+      let flower = flowers[i];
+      flower.gravity(this.gravity);
+      flower.levitate();
+      flower.drawFlower();
     }
   }
 
   display() {
     push();
     rotateX(PI / 3);
-    this.drawGrass();
+    // this.drawGrass();
     pop();
     push();
     rotateX(PI / 3);
