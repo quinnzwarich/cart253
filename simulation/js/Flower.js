@@ -17,13 +17,13 @@ class  Flower {
     };
     this.arguments = {
       position: createVector(x, y, z),
-      velocity: createVector(0, v, 0),
+      velocity: createVector(0, 0, v),
       red: r,
       green: g,
       blue: b,
       angle: a,
     };
-    this.acceleration = createVector();
+    this.acceleration = createVector(0, 0, 0.1);
     this.active = true;
     this.movement = false;
   }
@@ -41,28 +41,33 @@ class  Flower {
   }
 
   drawFlower() {
-    push();
-    translate(250, 650, 250);
-    translate(this.arguments.position.x, this.arguments.position.y, this.arguments.position.z);
-    rotateX(-PI / 2);
-    strokeWeight(0.33);
-    stroke(this.arguments.red, this.arguments.green, this.arguments.blue);
-    this.drawStem();
-    fill(this.arguments.red, this.arguments.green, this.arguments.blue);
-    rotateX(PI);
-    rotateY(2 * PI);
-    this.drawPetals();
-    pop();
+    if (this.active) {
+      push();
+      translate(250, 650, 250);
+      translate(this.arguments.position.x, this.arguments.position.y, this.arguments.position.z);
+      rotateX(-PI / 2);
+      strokeWeight(0.33);
+      stroke(this.arguments.red, this.arguments.green, this.arguments.blue);
+      this.drawStem();
+      fill(this.arguments.red, this.arguments.green, this.arguments.blue);
+      rotateX(PI);
+      rotateY(2 * PI);
+      this.drawPetals();
+      pop();
+    }
   }
 
-  gravity(force) {
-    this.acceleration = force;
-  }
+  // toggle() {
+  //   this.movement = true;
+  // }
 
   levitate() {
     if (this.movement) {
-      this.velocity.add(this.acceleration);
-      this.position.add(this.velocity);
+      this.arguments.velocity.add(this.acceleration);
+      this.arguments.position.add(this.arguments.velocity);
+      if (this.arguments.position.z > height) {
+        this.active = false;
+      }
     }
   }
 }
